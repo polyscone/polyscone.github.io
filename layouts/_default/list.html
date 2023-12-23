@@ -1,0 +1,21 @@
+{{define "main"}}
+	<h1>{{.Title}}</h1>
+
+	<nav class="posts">
+		<ol>
+			{{range $i, $_ := .Pages.Reverse}}
+				<li>
+					<p class="post__title">{{$i}}: {{.Title}}</p>
+
+					<p class="post__date-time">{{i18n "posted_at"}} <time datetime="{{.PublishDate.Format "2006-01-02"}}">{{.PublishDate.Format "2006-01-02"}}</time></p>
+
+					{{if .Description}}
+						<p class="post__description">{{.Description}}</p>
+					{{end}}
+
+					<p class="post__link"><a href="{{.RelPermalink}}">{{i18n "read_post"}}</a></p>
+				</li>
+			{{end}}
+		</ol>
+	</nav>
+{{end}}

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="{{.Site.Language.Lang}}">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<title>{{.Title}}</title>
+		<meta name="description" content="{{.Description | default .Summary | default .Site.Params.Description}}">
+
+		{{$paginator := .Paginate (where .Site.RegularPages ".Params.post" "!=" false)}}
+		{{if .IsHome}}
+			{{if eq $paginator.PageNumber 1}}
+				<link rel="canonical" href="{{.RelPermalink}}">
+			{{else}}
+				<link rel="canonical" href="{{.RelPermalink}}page/{{$paginator.PageNumber}}/">
+			{{end}}
+		{{else}}
+			<link rel="canonical" href="{{.RelPermalink}}">
+		{{end}}
+
+		<style>
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+				font: 14px Arial, sans-serif;
+				line-height: 1.45;
+				background: #333;
+				color: #333;
+			}
+
+			html {
+				box-sizing: border-box;
+				overflow-x: hidden;
+				scroll-behavior: smooth;
+				word-break: auto-phrase;
+			}
+
+			*,
+			*:before,
+			*:after {
+				box-sizing: inherit;
+			}
+
+			img {
+				border: none;
+				max-width: 100%;
+				height: auto;
+			}
+
+			table {
+				border-spacing: 0;
+			}
+
+			table,
+			tr,
+			td {
+				position: relative;
+			}
+
+			ul {
+				padding-left: 1.5em;
+			}
+
+			small {
+				font-size: 0.6em;
+				font-weight: normal;
+			}
+
+			.post img {
+				display: block;
+				background: #fff;
+			}
+
+			.post h1 {
+				font-size: 1.6em;
+				margin-top: 0;
+			}
+
+			.post__title {
+				display: inline-block;
+				width: calc(100% - 155px);
+			}
+
+			.post__date-time {
+				display: inline-block;
+				width: 150px;
+				text-align: right;
+			}
+
+			.post__image {
+				display: block;
+				text-align: center;
+			}
+
+			.post__section-title {
+				display: block;
+				font-size: 0.7em;
+			}
+
+			.post__section-title:after {
+				content: ":";
+			}
+
+			.section-link {
+				margin: 0 10px;
+				font-size: 15px;
+				font-weight: normal;
+			}
+
+			.section-link--left {
+				display: none;
+				margin-left: -1.2em;
+			}
+
+			.header {
+				background: #374668;
+				color: #fff;
+			}
+
+			.header__title {
+				line-height: 1.1;
+			}
+
+			.header__avatar {
+				border-radius: 50%;
+				max-width: 100px;
+			}
+
+			.main {
+				background: #fff;
+				margin: 0 auto;
+				overflow: hidden;
+			}
+
+			.footer {
+				text-align: center;
+			}
+
+			.footer,
+			.footer a {
+				color: #fff;
+			}
+
+			.header__inner {
+				display: flex;
+				flex-direction: column-reverse;
+				align-items: center;
+				justify-content: space-between;
+				text-align: center;
+			}
+
+			.header__inner,
+			.navigation__inner,
+			.main__inner,
+			.footer__inner {
+				max-width: 640px;
+				margin: 0 auto;
+				padding: 10px;
+			}
+
+			.footer__inner {
+				padding-bottom: 100px;
+			}
+
+			.footer__licence img {
+				height: 1.5em;
+				vertical-align: bottom;
+				margin-left: 0.2em;
+			}
+
+			.navigation {
+				background: #fff;
+				padding: 0;
+				border-bottom: 1px solid #ddd;
+			}
+
+			.navigation ul {
+				display: flex;
+			}
+
+			.navigation ul,
+			.navigation li {
+				padding: 0;
+				list-style: none;
+				color: #fff;
+			}
+
+			.navigation a {
+				display: block;
+				padding: 10px;
+			}
+
+			.posts ol {
+				padding: 0;
+				list-style: none;
+			}
+
+			.posts li {
+				padding-bottom: 15px;
+				margin-bottom: 15px;
+				border-bottom: 1px solid #ddd;
+			}
+
+			.posts li:last-child {
+				border: none;
+			}
+
+			.post-navigation {
+				display: flex;
+				justify-content: space-between;
+				text-align: center;
+			}
+
+			.post-navigation a,
+			.post-navigation span {
+				display: inline-block;
+				width: calc(100% / 3);
+				padding: 10px 0;
+			}
+
+			.post-navigation a:first-child,
+			.post-navigation span:first-child {
+				text-align: left;
+			}
+
+			.post-navigation a:last-child,
+			.post-navigation span:last-child {
+				text-align: right;
+			}
+
+			.post__title {
+				font-weight: bold;
+			}
+
+			.series {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+			}
+
+			.series li {
+				border: 1px solid #ddd;
+			}
+
+			.series__title {
+				background: #f7f7f7;
+				border-bottom: 1px solid #ddd;
+				font-weight: bold;
+			}
+
+			.series__title,
+			.series__description,
+			.series__link {
+				padding: 10px;
+			}
+
+			blockquote {
+				border-left: 5px solid #ffe28a;
+				margin: 1em 0;
+				padding: 1px 20px;
+				display: block;
+				background: #fffbf0;
+				quotes: "“" "”" "‘" "’";
+			}
+
+			blockquote > *:first-child::before {
+				content: open-quote;
+			}
+
+			blockquote > *:last-child::after {
+				content: close-quote;
+			}
+
+			code {
+				font: 14px consolas, monospace;
+				padding: 0 7px;
+				background: #ececec;
+			}
+
+			.highlight pre {
+				margin: 0;
+				padding: 10px;
+				border: 1px solid #ddd;
+				overflow: hidden;
+				overflow-x: auto;
+				text-overflow: ellipsis;
+			}
+
+			.highlight td:first-child pre {
+				border-right: none;
+			}
+
+			pre code {
+				outline: none;
+				padding: 0;
+				background: none;
+				border: none;
+			}
+
+			.toc {
+				margin-top: 1em;
+				border: 1px solid #ddd;
+			}
+
+			.toc ol {
+				margin: 0;
+				padding-left: 20px;
+				list-style: decimal;
+			}
+
+			.toc nav > ol ol {
+				list-style: lower-alpha;
+			}
+
+			.toc nav > ol ol ol {
+				list-style: lower-roman;
+			}
+
+			.toc__title {
+				background: #f7f7f7;
+				font-weight: bold;
+				border-bottom: 1px solid #ddd;
+				padding: 10px;
+			}
+
+			.toc__table {
+				padding: 10px;
+			}
+
+			@media screen and (min-width: 640px) {
+				.header__inner {
+					flex-direction: row;
+					text-align: left;
+				}
+
+				.highlight pre {
+					margin: 0;
+				}
+			}
+
+			@media screen and (min-width: 700px) {
+				.section-link--left {
+					display: inline;
+				}
+
+				.section-link--right {
+					display: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		{{$style := resources.Get "js/components.js" | resources.Minify | resources.Fingerprint}}
+		<script src="{{$style.RelPermalink}}"></script>
+
+		<header class="header">
+			<div class="header__inner">
+				<h1 class="header__title">
+					{{.Site.Title}}<br>
+					<small>{{.Site.Params.Tagline}}</small>
+				</h1>
+
+				{{$avatar := resources.Get "images/avatar.jpg" | resources.Fingerprint}}
+				<img src="{{$avatar.RelPermalink}}" class="header__avatar" alt="{{.Site.Title}}">
+			</div>
+		</header>
+
+		<nav class="navigation">
+			<ul class="navigation__inner">
+				<li><a href="/">{{i18n "nav_home"}}</a></li>
+			</ul>
+		</nav>
+
+		<section class="main">
+			<div class="main__inner">
+				{{block "main" .}}{{end}}
+			</div>
+		</section>
+
+		<footer class="footer">
+			<div class="footer__inner">
+				<p>
+					Copyright &copy;
+					{{$year := now.Year}}
+					{{if ne $year 2024}}
+						2024-{{$year}}
+					{{else}}
+						2024
+					{{end}}
+					{{.Site.Params.author}} (Jake Lucas)
+				</p>
+
+				<p class="footer__licence" xmlns:dct="http://purl.org/dc/terms" xmlns:cc="http://creativecommons.org/ns">
+					<a rel="license" href="https://creativecommons.org/licenses/by/4.0" rel="license">
+						CC BY 4.0 <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg">
+					</a>
+				</p>
+			</div>
+		</footer>
+	</body>
+</html>

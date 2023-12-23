@@ -1,0 +1,25 @@
+{{define "main"}}
+	{{if .IsTranslated}}
+		<ul>
+			{{range .Translations}}
+				<li>
+					<a href="{{.RelPermalink}}">{{.Language.LanguageName}}: {{.Title}}{{if .IsPage}}{{end}}</a>
+				</li>
+			{{end}}
+		</ul>
+	{{end}}
+
+	<nav>
+		<ul class="series">
+			{{range .Pages}}
+				<li>
+					<div class="series__title">{{.Title}}</div>
+					<div class="series__description">{{.Description}}</div>
+					<div class="series__link"><a href="{{.RelPermalink}}">{{i18n "view_posts"}}</a></div>
+				</li>
+			{{end}}
+		</ul>
+	</nav>
+
+	{{.Content}}
+{{end}}

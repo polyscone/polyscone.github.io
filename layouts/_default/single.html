@@ -1,0 +1,39 @@
+{{define "main"}}
+	<article class="post">
+		<h1>
+			{{if .FirstSection.Title}}
+				<span class="post__section-title">{{.FirstSection.Title}}</span>
+			{{end}}
+
+			{{.Title}}
+		</h1>
+
+		<p>{{i18n "posted_at"}} <time datetime="{{.PublishDate.Format "2006-01-02"}}" data-date="full">{{.PublishDate.Format "2006-01-02"}}</time></p>
+
+		{{if .IsTranslated}}
+			<ul>
+				{{range .Translations}}
+					<li>
+						<a href="{{.RelPermalink}}">{{.Language.LanguageName}}: {{.Title}}{{if .IsPage}}{{end}}</a>
+					</li>
+				{{end}}
+			</ul>
+		{{end}}
+
+		{{partial "toc.html" .}}
+
+		<nav class="post-navigation">
+			{{if .PrevInSection}}<a href="{{.PrevInSection.RelPermalink}}">&laquo; {{.PrevInSection.Title}}</a>{{else}}<span>&nbsp;</span>{{end}}
+			<a href="{{.FirstSection.RelPermalink}}">{{.FirstSection.Title}}</a>
+			{{if .NextInSection}}<a href="{{.NextInSection.RelPermalink}}">{{.NextInSection.Title}} &raquo;</a>{{else}}<span>&nbsp;</span>{{end}}
+		</nav>
+
+		{{.Content | replaceRE "(<h[2-6] id=\"(.+?)\".*?>)(.*?)(</h[2-6]>)" "${1}<a href=\"#${2}\" class=\"section-link section-link--left\">§</a>${3}<a href=\"#${2}\" class=\"section-link section-link--right\">§</a>${4}" | safeHTML}}
+
+		<nav class="post-navigation">
+			{{if .PrevInSection}}<a href="{{.PrevInSection.RelPermalink}}">&laquo; {{.PrevInSection.Title}}</a>{{else}}<span>&nbsp;</span>{{end}}
+			<a href="{{.FirstSection.RelPermalink}}">{{.FirstSection.Title}}</a>
+			{{if .NextInSection}}<a href="{{.NextInSection.RelPermalink}}">{{.NextInSection.Title}} &raquo;</a>{{else}}<span>&nbsp;</span>{{end}}
+		</nav>
+	</article>
+{{end}}

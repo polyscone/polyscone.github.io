@@ -1,0 +1,11 @@
+[nav_home]
+	other = "ホーム"
+
+[view_posts]
+	other = "投稿一覧"
+
+[posted_at]
+	other = "作成日"
+
+[read_post]
+	other = "続きを読む"
