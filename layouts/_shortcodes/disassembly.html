@@ -1,0 +1,71 @@
+{{$rows := split (trim .Inner "\n ") "\n"}}
+
+<div class="disassembly-table">
+	<div class="disassembly-table__inner">
+		<div class="disassembly-table__addresses">
+			<div class="disassembly-table__row">Virtual Address</div>
+
+			{{range $_, $row := $rows}}
+				{{$parts := split $row "|"}}
+				{{$address := trim (index $parts 0) " "}}
+				{{$highlightRow := strings.HasPrefix $address ": "}}
+				{{$address = trim $address ": "}}
+				{{$addressParts := split $address ":"}}
+				{{$addressGhost := ""}}
+				{{$addressMain := index $addressParts 0}}
+
+				{{if gt (len $addressParts) 1}}
+					{{$addressGhost = index $addressParts 0}}
+					{{$addressMain = index $addressParts 1}}
+				{{end}}
+
+				<div class="disassembly-table__row{{if $highlightRow}} disassembly-table__row--highlight{{end}}">
+					{{- if $highlightRow}}<mark class="disassembly-table__highlight">{{end -}}
+
+					{{- if $addressGhost}}<span class="disassembly-table__ghost">{{$addressGhost}}</span>{{end -}}
+					{{- lower $addressMain -}}
+
+					{{- if $highlightRow}}</mark>{{end -}}
+				</div>
+			{{end}}
+		</div>
+
+		<div class="disassembly-table__machine-code">
+			<div class="disassembly-table__row">Machine Code</div>
+
+			{{range $_, $row := $rows}}
+				{{$parts := split $row "|"}}
+				{{$address := trim (index $parts 0) " "}}
+				{{$machine := trim (index $parts 1) " "}}
+				{{$highlightRow := strings.HasPrefix $address ": "}}
+
+				<div class="disassembly-table__row{{if $highlightRow}} disassembly-table__row--highlight{{end}}">
+					{{- if $highlightRow}}<mark class="disassembly-table__highlight">{{end -}}
+
+					{{- lower $machine -}}
+
+					{{- if $highlightRow}}</mark>{{end -}}
+				</div>
+			{{end}}
+		</div>
+
+		<div class="disassembly-table__assembly">
+			<div class="disassembly-table__row">Assembly</div>
+
+			{{range $_, $row := $rows}}
+				{{$parts := split $row "|"}}
+				{{$address := trim (index $parts 0) " "}}
+				{{$assembly := trim (index $parts 2) " "}}
+				{{$highlightRow := strings.HasPrefix $address ": "}}
+
+				<div class="disassembly-table__row{{if $highlightRow}} disassembly-table__row--highlight{{end}}">
+					{{- if $highlightRow}}<mark class="disassembly-table__highlight">{{end -}}
+
+					{{- lower $assembly -}}
+
+					{{- if $highlightRow}}</mark>{{end -}}
+				</div>
+			{{end}}
+		</div>
+	</div>
+</div>

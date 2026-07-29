@@ -1,0 +1,17 @@
+{{$src := resources.Get (.Get "src") | resources.Fingerprint}}
+{{$alt := default "" (.Get "alt")}}
+{{$anchorText := default $alt (.Get "anchor-text")}}
+{{$hideAnchor := eq (.Get "hide-anchor") "true"}}
+{{$aspect := print (mul (div (float $src.Height) (float $src.Width)) 100.0)}}
+
+<div class="post__image">
+	{{if and (not $hideAnchor) $anchorText}}
+		<a href="#{{urlize $alt}}" id="{{urlize $alt}}">[Image: {{$anchorText}}]</a>
+	{{end}}
+
+	<div style="margin: 15px auto; max-width: {{$src.Width}}px">
+		<a href="{{$src.RelPermalink}}" style="display: block; height: 0; padding-bottom: {{$aspect}}%">
+			<img src="{{$src.RelPermalink}}" alt="{{$alt}}" loading="lazy">
+		</a>
+	</div>
+</div>

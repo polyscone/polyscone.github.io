@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+	<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<title>Compiler From Scratch (2025 Archive) | Polyscone</title>
+		<meta name="description" content="A 19-hour Go compiler project, from scanning and Pratt parsing through type checking and IR to x86-64 code and a PE32&#43; executable.">
+
+		<link rel="canonical" href="http://localhost:1313/videos/compiler-from-scratch/">
+		
+		<link rel="stylesheet" href="/css/style.min.3f0baca9f74bb709c807e123f84d340fc117db1f083966b2aa55aaf120282c58.css">
+		<script data-goatcounter="https://polyscone.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+	</head>
+	<body>
+		<header class="header">
+			<div class="header__inner">
+				<p class="header__title">
+					<a href="/">Polyscone</a><br>
+					<span class="header__tagline">Notes, projects, and other technical stuff</span>
+				</p>
+
+				
+				<img src="/images/avatar.c9f9c08a211f6e561d5747e0b235ea05be39108fd9e39727abd566516e42bb2a.jpg" class="header__avatar" alt="Polyscone">
+			</div>
+		</header>
+
+		<nav class="navigation">
+			<ul class="navigation__inner">
+				<li><a href="/">Home</a></li>
+				<li><a href="/posts/">Posts</a></li>
+				<li><a href="/tags/">Tags</a></li>
+				<li><a aria-current="page" href="/videos/">Videos</a></li>
+				<li class="navigation__social-start">
+					<a href="https://x.com/polyscone" aria-label="Twitter" title="Twitter" target="_blank" rel="noreferrer">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 15.6 6.4 22H3.3l7.2-8.2L2.8 2h6.4l4.4 5.8L18.9 2Zm-1.1 17.9h1.7L8.3 4H6.5l11.3 15.9Z"/>
+						</svg>
+					</a>
+				</li>
+				<li>
+					<a href="https://bsky.app/profile/polyscone.bsky.social" aria-label="Bluesky" title="Bluesky" target="_blank" rel="noreferrer">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M12 10.8c-1.1-2.1-4-6.1-6.8-8C2.6.9 1.6 1.3.9 1.6.1 1.9 0 3.1 0 3.8s.4 5.7.6 6.5c.8 2.7 3.7 3.7 6.4 3.4-4.7.7-8.8 2.4-3.4 8.4 6 6.2 8.2-1.3 8.4-2.8.2 1.5 2.4 9 8.4 2.8 5.4-6 1.3-7.7-3.4-8.4 2.7.3 5.6-.7 6.4-3.4.2-.8.6-5.8.6-6.5s-.1-1.9-.9-2.2c-.7-.3-1.7-.7-4.3 1.2-2.8 1.9-5.7 5.9-6.8 8Z"/>
+						</svg>
+					</a>
+				</li>
+				<li>
+					<a href="https://youtube.com/@polyscone" aria-label="YouTube" title="YouTube" target="_blank" rel="noreferrer">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.5v-7l6.3 3.5-6.3 3.5Z"/>
+						</svg>
+					</a>
+				</li>
+			</ul>
+		</nav>
+
+		<main class="main">
+			<div class="main__inner">
+				
+	
+		<article class="post">
+			<p><a href="/videos/">Videos</a></p>
+			<h1>Compiler From Scratch (2025 Archive)</h1>
+
+			<p>A 2025 project building a compiler from scratch in Go without AI assistance, over roughly nineteen hours of unedited programming sessions. It follows source text through scanning, Pratt parsing, type checking and a simple intermediate representation, then lowers that representation to native x86-64 machine code. The compiler writes a PE32+ Windows executable directly, without relying on LLVM.</p>
+<p>The backend sessions cover MOV, register and memory operands, ModR/M, SIB, displacements and a small set of arithmetic instructions. The frontend sessions cover operator precedence, syntax trees, parser diagnostics and checking function returns. This implementation is separate from <a href="/videos/compiler-toolchain/">Compiler Toolchain Development</a>.</p>
+
+
+			
+				<p><a href="https://www.youtube.com/playlist?list=PLfwYKZej86PpEFsy6HQB9WQIlIGmfOy_s" target="_blank" rel="noreferrer">Watch the Compiler From Scratch (2025 Archive) playlist on YouTube</a></p>
+			
+
+			
+
+			
+			
+
+			
+				<h2 id="videos">Videos</h2>
+				<ol class="video-entries">
+	
+		<li>
+			<a href="/videos/compiler-from-scratch/001-building-a-scanner/">
+				
+				
+					
+					<img src="/images/videos/compiler_from_scratch/001_hu_d2b5dae33af1e737.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Building a Scanner</h3>
+					
+						<p class="video-entries__description">Start the Fyn compiler in Go by defining source files and tokens, then scanning keywords, identifiers, integers, punctuation, and source…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 34:32</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/compiler-from-scratch/002-building-a-pratt-parser/">
+				
+				
+					
+					<img src="/images/videos/compiler_from_scratch/002_hu_5c39db7990fcad7d.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Building a Pratt Parser</h3>
+					
+						<p class="video-entries__description">Build a precedence-aware Pratt parser that turns Fyn expressions into an AST while supporting prefix, infix, and postfix operators with…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 1:01:57</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/compiler-from-scratch/003-building-parser-test-infrastructure/">
+				
+				
+					
+					<img src="/images/videos/compiler_from_scratch/003_hu_68e81d272e049ba4.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Building Parser Test Infrastructure</h3>
+					
+						<p class="video-entries__description">Create readable AST snapshots and source-embedded parser fixtures using trivia, node spans, tree walking, and automated expected-output…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 49:44</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/compiler-from-scratch/004-parsing-functions-and-improving-parser-errors/">
+				
+				
+					
+					<img src="/images/videos/compiler_from_scratch/004_hu_3bff0e48e7f0961a.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Parsing Functions and Improving Parser Errors</h3>
+					
+						<p class="video-entries__description">Strengthen parser tests and diagnostics, then add module, function-declaration, and block nodes with error recovery and AST support.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 41:36</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/compiler-from-scratch/005-building-a-type-checker/">
+				
+				
+					
+					<img src="/images/videos/compiler_from_scratch/005_hu_e72b2a0dfdb3623a.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Building a Type Checker</h3>
+					
+						<p class="video-entries__description">Parse function return types and return statements, then build an interned type system and annotate expression nodes with checked types.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 43:38</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/compiler-from-scratch/006-type-checking-return-statements/">
+				
+				
+					
+					<img src="/images/videos/compiler_from_scratch/006_hu_dfcae6541e30c9a7.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Type-Checking Return Statements</h3>
+					
+						<p class="video-entries__description">Add function types and lexical environments, resolve built-in type names, and validate return counts and expression types inside functions.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 33:32</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/compiler-from-scratch/007-generating-basic-ir/">
+				
+				
+					
+					<img src="/images/videos/compiler_from_scratch/007_hu_272180f9e7af82b6.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Generating Basic IR</h3>
+					
+						<p class="video-entries__description">Design a linear intermediate representation and recursively lower typed Fyn functions, constants, returns, and binary expressions into…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 51:32</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/compiler-from-scratch/008-intel-sdm-vol-1-basic-execution-environment-and-procedures/">
+				
+				
+					
+					<img src="/images/videos/compiler_from_scratch/008_hu_21e74c213e783fde.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Intel SDM, Vol 1, Basic Execution Environment and Procedures</h3>
+					
+						<p class="video-entries__description">Study the Intel Software Developer's Manual to understand notation, operating modes, registers, memory addressing, procedures, and core…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 1:43:29</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/compiler-from-scratch/009-intel-sdm-vol-2-instruction-format-and-encoding/">
+				
+				
+					
+					<img src="/images/videos/compiler_from_scratch/009_hu_a4efedf642ef867.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Intel SDM Vol 2, Instruction Format and Encoding</h3>
+					
+						<p class="video-entries__description">Read Intel's instruction-format reference to learn prefixes, opcodes, ModR/M, SIB, REX, displacements, immediates, and the notation used by…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 1:26:33</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/compiler-from-scratch/010-encoding-register-to-register-mov/">
+				
+				
+					
+					<img src="/images/videos/compiler_from_scratch/010_hu_c28f3331b1f0ea23.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding Register-to-Register MOV</h3>
+					
+						<p class="video-entries__description">Start the x86-64 encoder with register operands and implement tested register-to-register MOV encoding using operand-size, ModR/M, and REX…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 36:07</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/compiler-from-scratch/011-encoding-register-memory-mov/">
+				
+				
+					
+					<img src="/images/videos/compiler_from_scratch/011_hu_67538ce44c6249a1.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding Register/Memory MOV</h3>
+					
+						<p class="video-entries__description">Extend MOV encoding to register-to-memory and memory-to-register operations, including the special RSP/R12 SIB and RBP/R13 displacement…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 30:03</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/compiler-from-scratch/012-encoding-memory-displacements/">
+				
+				
+					
+					<img src="/images/videos/compiler_from_scratch/012_hu_bfb6638c0c0c07f5.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding Memory Displacements</h3>
+					
+						<p class="video-entries__description">Encode base-plus-displacement and RIP-relative MOV operands while selecting compact disp8 forms and handling base-pointer exceptions.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 17:20</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/compiler-from-scratch/013-encoding-scaled-index-addressing/">
+				
+				
+					
+					<img src="/images/videos/compiler_from_scratch/013_hu_a647c1ea1c83a3a1.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding Scaled-Index Addressing</h3>
+					
+						<p class="video-entries__description">Implement SIB encoding for scaled-index effective addresses, including scale conversion, REX extensions, missing-base forms, and special…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 42:21</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/compiler-from-scratch/014-encoding-immediate-mov/">
+				
+				
+					
+					<img src="/images/videos/compiler_from_scratch/014_hu_581a21c30a34c836.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding Immediate MOV</h3>
+					
+						<p class="video-entries__description">Add immediate-source MOV forms for register and memory destinations using opcode-register extensions, `/digit` fields, REX rules, and…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 35:37</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/compiler-from-scratch/015-improving-x86-64-encoder-tests/">
+				
+				
+					
+					<img src="/images/videos/compiler_from_scratch/015_hu_46e4eea9fdd4ba0c.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Improving x86-64 Encoder Tests</h3>
+					
+						<p class="video-entries__description">Add encoder assertions and replace repetitive hand-written cases with a compact instruction parser that derives operands, sizes, registers,…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 30:00</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/compiler-from-scratch/016-encoding-lea-add-and-sub/">
+				
+				
+					
+					<img src="/images/videos/compiler_from_scratch/016_hu_f2b0304bba67fe03.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding LEA, ADD, and SUB</h3>
+					
+						<p class="video-entries__description">Grow the encoder beyond MOV by implementing LEA and shared ADD/SUB forms for registers, memory, immediates, and accumulator-specific…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 25:11</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/compiler-from-scratch/017-encoding-mul-div-and-ret/">
+				
+				
+					
+					<img src="/images/videos/compiler_from_scratch/017_hu_cbc49f64500e6a6b.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding MUL, DIV, and RET</h3>
+					
+						<p class="video-entries__description">Complete the initial instruction set with sign-extended ADD/SUB immediates, implicit-register MUL/DIV forms, and the single-byte RET…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 22:27</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/compiler-from-scratch/018-lowering-ir-to-x86-64-machine-code/">
+				
+				
+					
+					<img src="/images/videos/compiler_from_scratch/018_hu_72c0a715dd356005.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Lowering IR to x86-64 Machine Code</h3>
+					
+						<p class="video-entries__description">Connect the IR and x86-64 encoder with naive virtual-register allocation, operand conversion, instruction dispatch, and end-to-end…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 29:46</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/compiler-from-scratch/019-writing-pe32-executables/">
+				
+				
+					
+					<img src="/images/videos/compiler_from_scratch/019_hu_52fbb0f9d960abad.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Writing PE32&#43; Executables</h3>
+					
+						<p class="video-entries__description">Write a PE32+ image generator from the Windows specification, emit headers and sections, inspect the binary, and run generated x86-64 code…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 1:42:57</p>
+					
+				</div>
+			</a>
+		</li>
+	
+</ol>
+
+			
+		</article>
+	
+
+			</div>
+		</main>
+
+		<footer class="footer">
+			<div class="footer__inner">
+				<p>
+					Copyright &copy;
+					
+					
+					
+					
+						
+						
+					
+					
+						2026
+					
+					Jake Lucas (Polyscone)
+				</p>
+
+				<p class="footer__licence">
+					<a href="https://creativecommons.org/licenses/by/4.0" rel="license">
+						CC BY 4.0 <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt=""><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="">
+					</a>
+				</p>
+			</div>
+		</footer>
+	</body>
+</html>

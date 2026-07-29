@@ -1,0 +1,14 @@
+<article class="post-preview">
+	{{$excerpt := .Content | replaceRE "(?s)<h[1-6][^>]*>.*?</h[1-6]>" "" | plainify | htmlUnescape}}
+	<h2>
+		<a href="{{.RelPermalink}}">
+			{{if eq .FirstSection.Params.content_kind "post"}}
+				<span>{{.FirstSection.Title}}:</span>
+			{{end}}
+			{{.Title}}
+		</a>
+	</h2>
+	<time datetime="{{.PublishDate.Format "2006-01-02"}}">{{.PublishDate.Format "2006-01-02"}}</time>
+	<p class="post-preview__excerpt">{{truncate 700 (trim $excerpt "\n ")}}</p>
+	<a href="{{.RelPermalink}}">Read more →</a>
+</article>

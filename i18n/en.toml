@@ -1,0 +1,11 @@
+[nav_home]
+	other = "Home"
+
+[view_posts]
+	other = "View posts »"
+
+[posted_at]
+	other = "Posted"
+
+[read_post]
+	other = "Read post »"

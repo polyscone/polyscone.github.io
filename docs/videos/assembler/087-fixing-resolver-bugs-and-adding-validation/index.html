@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+	<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<title>Fixing Resolver Bugs and Adding Validation | Polyscone</title>
+		<meta name="description" content="I work through the assembler resolver&#39;s remaining fixes and validation checks before moving on to instruction lowering. I fix string initialisers in nested arrays, reject invalid scalar initialisers, and resolve identifiers inside lists, groups and unary expressions. I debug section associations for functions and labels, validate power-of-two alignments, propagate object and standalone alignments to sections, and allow sections to be reopened. I also reject missing or empty initialisers for inferred arrays and non-constant symbols in constant expressions, then prevent duplicate declarations from modifying existing symbols. BSS initialiser validation is left for later.">
+
+		<link rel="canonical" href="http://localhost:1313/videos/assembler/087-fixing-resolver-bugs-and-adding-validation/">
+		
+		<link rel="stylesheet" href="/css/style.min.3f0baca9f74bb709c807e123f84d340fc117db1f083966b2aa55aaf120282c58.css">
+		<script data-goatcounter="https://polyscone.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+	</head>
+	<body>
+		<header class="header">
+			<div class="header__inner">
+				<p class="header__title">
+					<a href="/">Polyscone</a><br>
+					<span class="header__tagline">Notes, projects, and other technical stuff</span>
+				</p>
+
+				
+				<img src="/images/avatar.c9f9c08a211f6e561d5747e0b235ea05be39108fd9e39727abd566516e42bb2a.jpg" class="header__avatar" alt="Polyscone">
+			</div>
+		</header>
+
+		<nav class="navigation">
+			<ul class="navigation__inner">
+				<li><a href="/">Home</a></li>
+				<li><a href="/posts/">Posts</a></li>
+				<li><a href="/tags/">Tags</a></li>
+				<li><a aria-current="page" href="/videos/">Videos</a></li>
+				<li class="navigation__social-start">
+					<a href="https://x.com/polyscone" aria-label="Twitter" title="Twitter" target="_blank" rel="noreferrer">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 15.6 6.4 22H3.3l7.2-8.2L2.8 2h6.4l4.4 5.8L18.9 2Zm-1.1 17.9h1.7L8.3 4H6.5l11.3 15.9Z"/>
+						</svg>
+					</a>
+				</li>
+				<li>
+					<a href="https://bsky.app/profile/polyscone.bsky.social" aria-label="Bluesky" title="Bluesky" target="_blank" rel="noreferrer">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M12 10.8c-1.1-2.1-4-6.1-6.8-8C2.6.9 1.6 1.3.9 1.6.1 1.9 0 3.1 0 3.8s.4 5.7.6 6.5c.8 2.7 3.7 3.7 6.4 3.4-4.7.7-8.8 2.4-3.4 8.4 6 6.2 8.2-1.3 8.4-2.8.2 1.5 2.4 9 8.4 2.8 5.4-6 1.3-7.7-3.4-8.4 2.7.3 5.6-.7 6.4-3.4.2-.8.6-5.8.6-6.5s-.1-1.9-.9-2.2c-.7-.3-1.7-.7-4.3 1.2-2.8 1.9-5.7 5.9-6.8 8Z"/>
+						</svg>
+					</a>
+				</li>
+				<li>
+					<a href="https://youtube.com/@polyscone" aria-label="YouTube" title="YouTube" target="_blank" rel="noreferrer">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.5v-7l6.3 3.5-6.3 3.5Z"/>
+						</svg>
+					</a>
+				</li>
+			</ul>
+		</nav>
+
+		<main class="main">
+			<div class="main__inner">
+				
+	
+	
+
+	<article class="post">
+		<p><a href="/videos/">Videos</a> / <a href="/videos/assembler/">Assembler</a></p>
+		<h1>Fixing Resolver Bugs and Adding Validation</h1>
+
+		<iframe class="video-player" src="https://www.youtube-nocookie.com/embed/rTL4WzL5BjY" title="Fixing Resolver Bugs and Adding Validation" width="780" height="439" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+		<h2>Description</h2>
+		<p>I work through the assembler resolver's remaining fixes and validation checks before moving on to instruction lowering. I fix string initialisers in nested arrays, reject invalid scalar initialisers, and resolve identifiers inside lists, groups and unary expressions. I debug section associations for functions and labels, validate power-of-two alignments, propagate object and standalone alignments to sections, and allow sections to be reopened. I also reject missing or empty initialisers for inferred arrays and non-constant symbols in constant expressions, then prevent duplicate declarations from modifying existing symbols. BSS initialiser validation is left for later.</p>
+
+		<p>Published <time datetime="2026-10-13">October 13, 2026</time>.</p>
+		<p><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY" target="_blank" rel="noreferrer">Watch on YouTube</a></p>
+
+		
+			<h2>Timestamps</h2>
+			<ol class="video-chapters">
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=0s" data-start="0">00:00:00 - Reviewing the Remaining Resolver Tasks</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=12s" data-start="12">00:00:12 - Fixing String Initialisers in Nested Arrays</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=211s" data-start="211">00:03:31 - Adding Invalid Initialiser Cases</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=329s" data-start="329">00:05:29 - Improving Resolver Test Failure Messages</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=374s" data-start="374">00:06:14 - Rejecting Strings and Lists for Scalars</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=474s" data-start="474">00:07:54 - Passing the Parent Type Kind Through Resolution</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=545s" data-start="545">00:09:05 - Resolving Identifiers in Groups and Unary Expressions</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=663s" data-start="663">00:11:03 - Resolving Identifiers in Initialiser Lists</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=760s" data-start="760">00:12:40 - Associating Functions and Labels with Sections</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=830s" data-start="830">00:13:50 - Trying Section Tracking During Declaration</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=1072s" data-start="1072">00:17:52 - Debugging Incorrect Section Associations</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=1438s" data-start="1438">00:23:58 - Tracing the Declaration and Resolution Passes</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=1627s" data-start="1627">00:27:07 - Restoring Section Resolution and Fixing Associations</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=1741s" data-start="1741">00:29:01 - Requiring an Active Section for Functions, Labels and Aligns</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=1877s" data-start="1877">00:31:17 - Fixing the Order of Section and Alignment Resolution</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=1996s" data-start="1996">00:33:16 - Validating Non-Zero Power-of-Two Alignments</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=2121s" data-start="2121">00:35:21 - Checking the Bitwise Power-of-Two Test</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=2213s" data-start="2213">00:36:53 - Trying an Invalid Alignment</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=2235s" data-start="2235">00:37:15 - Propagating Natural Object Alignment to Sections</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=2347s" data-start="2347">00:39:07 - Propagating Standalone Alignments to Sections</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=2414s" data-start="2414">00:40:14 - Considering Section Name Conflicts</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=2476s" data-start="2476">00:41:16 - Allowing Existing Sections to Be Reopened</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=2581s" data-start="2581">00:43:01 - Requiring Initialisers for Inferred Arrays</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=2725s" data-start="2725">00:45:25 - Handling Nil and Empty Initialisers</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=2865s" data-start="2865">00:47:45 - Checking Empty String Initialisers</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=2958s" data-start="2958">00:49:18 - Deferring BSS Initialiser Validation</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=2979s" data-start="2979">00:49:39 - Rejecting Non-Constant Symbols in Constant Expressions</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=3147s" data-start="3147">00:52:27 - Reviewing Symbol Kind Checks</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=3180s" data-start="3180">00:53:00 - Preserving Existing Symbols After Duplicate Declarations</a></li>
+				
+					<li><a href="https://www.youtube.com/watch?v=rTL4WzL5BjY&amp;t=3346s" data-start="3346">00:55:46 - Wrapping Up the Resolver Work</a></li>
+				
+			</ol>
+		
+
+		<nav class="post-navigation" aria-label="Series videos">
+			<a href="/videos/assembler/086-resolving-nested-array-types/">&laquo; Resolving Nested Array Types</a>
+			<a href="/videos/assembler/">Series</a>
+			<span></span>
+		</nav>
+	</article>
+
+	
+	
+		
+	
+	
+		
+	
+	<script type="application/ld+json">{"@context":"https://schema.org","@id":"http://localhost:1313/videos/assembler/087-fixing-resolver-bugs-and-adding-validation/#video","@type":"VideoObject","description":"I work through the assembler resolver's remaining fixes and validation checks before moving on to instruction lowering. I fix string initialisers in nested arrays, reject invalid scalar initialisers, and resolve identifiers inside lists, groups and unary expressions. I debug section associations for functions and labels, validate power-of-two alignments, propagate object and standalone alignments to sections, and allow sections to be reopened. I also reject missing or empty initialisers for inferred arrays and non-constant symbols in constant expressions, then prevent duplicate declarations from modifying existing symbols. BSS initialiser validation is left for later.\n","duration":"PT3366S","embedUrl":"https://www.youtube-nocookie.com/embed/rTL4WzL5BjY","name":"Fixing Resolver Bugs and Adding Validation","thumbnailUrl":["https://i.ytimg.com/vi/rTL4WzL5BjY/hqdefault.jpg"],"uploadDate":"2026-10-13T00:00:00Z","url":"http://localhost:1313/videos/assembler/087-fixing-resolver-bugs-and-adding-validation/"}</script>
+
+	<script>
+		const player = document.querySelector(".video-player")
+
+		document.querySelectorAll(".video-chapters a[data-start]").forEach(link => {
+			link.addEventListener("click", event => {
+				if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+					return
+				}
+
+				event.preventDefault()
+
+				const url = new URL(player.src)
+
+				url.searchParams.set("start", link.dataset.start)
+				url.searchParams.set("autoplay", "1")
+
+				player.src = url.href
+				player.scrollIntoView({block: "center"})
+				player.focus()
+			})
+		})
+	</script>
+
+			</div>
+		</main>
+
+		<footer class="footer">
+			<div class="footer__inner">
+				<p>
+					Copyright &copy;
+					
+					
+					
+					
+						
+						
+					
+					
+						2026
+					
+					Jake Lucas (Polyscone)
+				</p>
+
+				<p class="footer__licence">
+					<a href="https://creativecommons.org/licenses/by/4.0" rel="license">
+						CC BY 4.0 <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt=""><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="">
+					</a>
+				</p>
+			</div>
+		</footer>
+	</body>
+</html>

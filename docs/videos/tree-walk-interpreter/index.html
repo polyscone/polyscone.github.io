@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+	<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<title>Tree-Walk Interpreter in JavaScript (2025 Archive) | Polyscone</title>
+		<meta name="description" content="A two-hour JavaScript project that scans and parses a small language, then executes its syntax tree with variables, blocks, returns and function calls.">
+
+		<link rel="canonical" href="http://localhost:1313/videos/tree-walk-interpreter/">
+		
+		<link rel="stylesheet" href="/css/style.min.3f0baca9f74bb709c807e123f84d340fc117db1f083966b2aa55aaf120282c58.css">
+		<script data-goatcounter="https://polyscone.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+	</head>
+	<body>
+		<header class="header">
+			<div class="header__inner">
+				<p class="header__title">
+					<a href="/">Polyscone</a><br>
+					<span class="header__tagline">Notes, projects, and other technical stuff</span>
+				</p>
+
+				
+				<img src="/images/avatar.c9f9c08a211f6e561d5747e0b235ea05be39108fd9e39727abd566516e42bb2a.jpg" class="header__avatar" alt="Polyscone">
+			</div>
+		</header>
+
+		<nav class="navigation">
+			<ul class="navigation__inner">
+				<li><a href="/">Home</a></li>
+				<li><a href="/posts/">Posts</a></li>
+				<li><a href="/tags/">Tags</a></li>
+				<li><a aria-current="page" href="/videos/">Videos</a></li>
+				<li class="navigation__social-start">
+					<a href="https://x.com/polyscone" aria-label="Twitter" title="Twitter" target="_blank" rel="noreferrer">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 15.6 6.4 22H3.3l7.2-8.2L2.8 2h6.4l4.4 5.8L18.9 2Zm-1.1 17.9h1.7L8.3 4H6.5l11.3 15.9Z"/>
+						</svg>
+					</a>
+				</li>
+				<li>
+					<a href="https://bsky.app/profile/polyscone.bsky.social" aria-label="Bluesky" title="Bluesky" target="_blank" rel="noreferrer">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M12 10.8c-1.1-2.1-4-6.1-6.8-8C2.6.9 1.6 1.3.9 1.6.1 1.9 0 3.1 0 3.8s.4 5.7.6 6.5c.8 2.7 3.7 3.7 6.4 3.4-4.7.7-8.8 2.4-3.4 8.4 6 6.2 8.2-1.3 8.4-2.8.2 1.5 2.4 9 8.4 2.8 5.4-6 1.3-7.7-3.4-8.4 2.7.3 5.6-.7 6.4-3.4.2-.8.6-5.8.6-6.5s-.1-1.9-.9-2.2c-.7-.3-1.7-.7-4.3 1.2-2.8 1.9-5.7 5.9-6.8 8Z"/>
+						</svg>
+					</a>
+				</li>
+				<li>
+					<a href="https://youtube.com/@polyscone" aria-label="YouTube" title="YouTube" target="_blank" rel="noreferrer">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.5v-7l6.3 3.5-6.3 3.5Z"/>
+						</svg>
+					</a>
+				</li>
+			</ul>
+		</nav>
+
+		<main class="main">
+			<div class="main__inner">
+				
+	
+		<article class="post">
+			<p><a href="/videos/">Videos</a></p>
+			<h1>Tree-Walk Interpreter in JavaScript (2025 Archive)</h1>
+
+			<p>A 2025 project building a small tree-walk interpreter in JavaScript without AI assistance, over roughly two hours. The implementation scans source text into tokens, uses a Pratt parser to build an abstract syntax tree, and evaluates that tree directly. It supports arithmetic, unary prefix and postfix operators, parenthesised groups, expression statements, variables, blocks, returns and function calls.</p>
+<p>The series explains how operator precedence shapes an expression tree and how evaluating that tree produces a result. Function execution and returns from nested blocks demonstrate how the interpreter handles control flow. The <a href="/videos/compiler-from-scratch/">compiler from scratch archive</a> covers a separate implementation with type checking and native machine-code output.</p>
+
+
+			
+				<p><a href="https://www.youtube.com/playlist?list=PLTrjUW-dLpeY" target="_blank" rel="noreferrer">Watch the Tree-Walk Interpreter in JavaScript (2025 Archive) playlist on YouTube</a></p>
+			
+
+			
+
+			
+			
+
+			
+				<h2 id="videos">Videos</h2>
+				<ol class="video-entries">
+	
+		<li>
+			<a href="/videos/tree-walk-interpreter/001-writing-a-scanner/">
+				
+				
+					
+					<img src="/images/videos/js_treewalk_interpreter/001_hu_a4445c01103f03c5.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Writing a Scanner</h3>
+					
+						<p class="video-entries__description">Build a scanner that turns source text into a stream of numbers, operators, and other tokens while handling whitespace, unknown input, and…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 12:37</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/tree-walk-interpreter/002-writing-a-tdop-pratt-parser/">
+				
+				
+					
+					<img src="/images/videos/js_treewalk_interpreter/002_hu_e631f190c7d44893.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Writing a TDOP/Pratt Parser</h3>
+					
+						<p class="video-entries__description">Turn tokens into an abstract syntax tree with a Pratt parser, using binding powers to correctly handle operator precedence and…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 36:15</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/tree-walk-interpreter/003-writing-a-tree-walk-interpreter/">
+				
+				
+					
+					<img src="/images/videos/js_treewalk_interpreter/003_hu_64af340c598bc3d4.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Writing a Tree-Walk Interpreter</h3>
+					
+						<p class="video-entries__description">Create a tree-walk interpreter that recursively evaluates the abstract syntax tree and computes arithmetic results.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 5:58</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/tree-walk-interpreter/004-adding-unary-prefix-operators/">
+				
+				
+					
+					<img src="/images/videos/js_treewalk_interpreter/004_hu_7dd338ceb4f16916.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Adding Unary Prefix Operators</h3>
+					
+						<p class="video-entries__description">Extend the parser and interpreter with unary prefix operators, including correctly binding and evaluating unary minus and plus.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 12:28</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/tree-walk-interpreter/005-adding-unary-postfix-operators/">
+				
+				
+					
+					<img src="/images/videos/js_treewalk_interpreter/005_hu_f92104c979a4df75.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Adding Unary Postfix Operators</h3>
+					
+						<p class="video-entries__description">Add factorial as a unary postfix operator, covering its precedence, AST representation, evaluation, and edge cases.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 5:57</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/tree-walk-interpreter/006-changing-order-of-operations-with-groups/">
+				
+				
+					
+					<img src="/images/videos/js_treewalk_interpreter/006_hu_c5487503e1089a9d.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Changing Order of Operations with Groups</h3>
+					
+						<p class="video-entries__description">Add parenthesised groups so programs can explicitly override normal operator precedence while preserving groups in the AST.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 5:03</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/tree-walk-interpreter/007-parsing-expression-statements/">
+				
+				
+					
+					<img src="/images/videos/js_treewalk_interpreter/007_hu_1bc6f2a16500537e.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Parsing Expression Statements</h3>
+					
+						<p class="video-entries__description">Move beyond standalone expressions by parsing semicolon-terminated expression statements into a program that the interpreter can execute.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 6:47</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/tree-walk-interpreter/008-adding-return-statements/">
+				
+				
+					
+					<img src="/images/videos/js_treewalk_interpreter/008_hu_3ca724a07819a64c.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Adding Return Statements</h3>
+					
+						<p class="video-entries__description">Introduce keywords, identifiers, and return statements, including optional return values and early termination of program execution.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 12:05</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/tree-walk-interpreter/009-executing-functions/">
+				
+				
+					
+					<img src="/images/videos/js_treewalk_interpreter/009_hu_6b937ef9ffa9280c.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Executing Functions</h3>
+					
+						<p class="video-entries__description">Parse function declarations and blocks, then execute a main function using nested environments for name lookup and lexical scope.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 13:12</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/tree-walk-interpreter/010-variables-block-statements-and-nested-block-returns/">
+				
+				
+					
+					<img src="/images/videos/js_treewalk_interpreter/010_hu_2b1498d34e9af40e.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Variables, Block Statements, and Nested Block Returns</h3>
+					
+						<p class="video-entries__description">Add variable declarations, identifier expressions, and explicit blocks, then use stack unwinding to support returns from deeply nested…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 9:50</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/tree-walk-interpreter/011-parsing-and-executing-function-calls/">
+				
+				
+					
+					<img src="/images/videos/js_treewalk_interpreter/011_hu_127d2b97fc7426ec.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Parsing and Executing Function Calls</h3>
+					
+						<p class="video-entries__description">Parse and execute function-call expressions while resolving the interaction between call, unary, and binary operator precedence.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 5:49</p>
+					
+				</div>
+			</a>
+		</li>
+	
+</ol>
+
+			
+		</article>
+	
+
+			</div>
+		</main>
+
+		<footer class="footer">
+			<div class="footer__inner">
+				<p>
+					Copyright &copy;
+					
+					
+					
+					
+						
+						
+					
+					
+						2026
+					
+					Jake Lucas (Polyscone)
+				</p>
+
+				<p class="footer__licence">
+					<a href="https://creativecommons.org/licenses/by/4.0" rel="license">
+						CC BY 4.0 <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt=""><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="">
+					</a>
+				</p>
+			</div>
+		</footer>
+	</body>
+</html>

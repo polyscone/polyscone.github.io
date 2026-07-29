@@ -1,0 +1,19 @@
+{{define "main"}}
+	<h1>{{.Title}}</h1>
+
+	<div class="tag-index">
+		{{range .Data.Terms.Alphabetical}}
+			<section aria-labelledby="tag-{{.Page.LinkTitle | urlize}}">
+				<h2 id="tag-{{.Page.LinkTitle | urlize}}">
+					<a href="{{.Page.RelPermalink}}">#{{.Page.LinkTitle}}</a>
+				</h2>
+
+				<ol class="post-index">
+					{{range .Pages.ByDate.Reverse}}
+						{{partial "post-index-item.html" (dict "page" . "showSeries" true)}}
+					{{end}}
+				</ol>
+			</section>
+		{{end}}
+	</div>
+{{end}}

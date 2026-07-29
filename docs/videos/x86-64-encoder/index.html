@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+	<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<title>x86-64 Encoder | Polyscone</title>
+		<meta name="description" content="Turning instructions into bytes: operand matching, ModR/M and SIB addressing, legacy/REX, VEX and EVEX encodings, validation and fixups.">
+
+		<link rel="canonical" href="http://localhost:1313/videos/x86-64-encoder/">
+		
+		<link rel="stylesheet" href="/css/style.min.3f0baca9f74bb709c807e123f84d340fc117db1f083966b2aa55aaf120282c58.css">
+		<script data-goatcounter="https://polyscone.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+	</head>
+	<body>
+		<header class="header">
+			<div class="header__inner">
+				<p class="header__title">
+					<a href="/">Polyscone</a><br>
+					<span class="header__tagline">Notes, projects, and other technical stuff</span>
+				</p>
+
+				
+				<img src="/images/avatar.c9f9c08a211f6e561d5747e0b235ea05be39108fd9e39727abd566516e42bb2a.jpg" class="header__avatar" alt="Polyscone">
+			</div>
+		</header>
+
+		<nav class="navigation">
+			<ul class="navigation__inner">
+				<li><a href="/">Home</a></li>
+				<li><a href="/posts/">Posts</a></li>
+				<li><a href="/tags/">Tags</a></li>
+				<li><a aria-current="page" href="/videos/">Videos</a></li>
+				<li class="navigation__social-start">
+					<a href="https://x.com/polyscone" aria-label="Twitter" title="Twitter" target="_blank" rel="noreferrer">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 15.6 6.4 22H3.3l7.2-8.2L2.8 2h6.4l4.4 5.8L18.9 2Zm-1.1 17.9h1.7L8.3 4H6.5l11.3 15.9Z"/>
+						</svg>
+					</a>
+				</li>
+				<li>
+					<a href="https://bsky.app/profile/polyscone.bsky.social" aria-label="Bluesky" title="Bluesky" target="_blank" rel="noreferrer">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M12 10.8c-1.1-2.1-4-6.1-6.8-8C2.6.9 1.6 1.3.9 1.6.1 1.9 0 3.1 0 3.8s.4 5.7.6 6.5c.8 2.7 3.7 3.7 6.4 3.4-4.7.7-8.8 2.4-3.4 8.4 6 6.2 8.2-1.3 8.4-2.8.2 1.5 2.4 9 8.4 2.8 5.4-6 1.3-7.7-3.4-8.4 2.7.3 5.6-.7 6.4-3.4.2-.8.6-5.8.6-6.5s-.1-1.9-.9-2.2c-.7-.3-1.7-.7-4.3 1.2-2.8 1.9-5.7 5.9-6.8 8Z"/>
+						</svg>
+					</a>
+				</li>
+				<li>
+					<a href="https://youtube.com/@polyscone" aria-label="YouTube" title="YouTube" target="_blank" rel="noreferrer">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.5v-7l6.3 3.5-6.3 3.5Z"/>
+						</svg>
+					</a>
+				</li>
+			</ul>
+		</nav>
+
+		<main class="main">
+			<div class="main__inner">
+				
+	
+		<article class="post">
+			<p><a href="/videos/">Videos</a> / <a href="/videos/compiler-toolchain/">Compiler Toolchain Development</a></p>
+			<h1>x86-64 Encoder</h1>
+
+			<p>Building an x86-64 machine-code encoder from scratch in Go without AI assistance, as part of <a href="/videos/compiler-toolchain/">Compiler Toolchain Development</a>. The encoder takes operations and structured operands, matches instruction forms, and emits bytes for use by an assembler or compiler backend. The recordings cover register and memory operands, ModR/M and SIB addressing, displacements, immediates, and legacy, REX, VEX and EVEX encodings.</p>
+<p>Instruction coverage includes integer and vector operations, EVEX masks, broadcasts, rounding and compressed displacements. NASM listings provide reference bytes for validation. The series also covers performance, labels, fixups and encoding bugs, with an overview of the instruction format and worked encoding examples.</p>
+
+
+			
+				<p><a href="https://www.youtube.com/playlist?list=PLfwYKZej86PrERg1ho6r17PyXmFUD5CZ_" target="_blank" rel="noreferrer">Watch the x86-64 Encoder playlist on YouTube</a></p>
+			
+
+			
+
+			
+			
+
+			
+				<h2 id="videos">Videos</h2>
+				<ol class="video-entries">
+	
+		<li>
+			<a href="/videos/x86-64-encoder/001-x86-64-instruction-encoding-overview/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/001_hu_ce01558e47a15e03.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>x86_64 Instruction Encoding Overview</h3>
+					
+						<p class="video-entries__description">An overview of how x86_64 instruction encoding works across legacy, VEX, and EVEX encoding families, followed by a manual encoding…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 34:12</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/002-encoding-syscall-and-ret-with-nasm-listing-tests/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/002_hu_d73ff877f480cb03.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding SYSCALL and RET with NASM Listing Tests</h3>
+					
+						<p class="video-entries__description">Setting up the first version of the encoder and a NASM listing-based test harness, using simple zero-operand instructions to verify that…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 14:59</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/003-encoding-register-operands-with-modrm-and-mov/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/003_hu_c5c3959b70652d25.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding Register Operands with ModRM and MOV</h3>
+					
+						<p class="video-entries__description">Implementing register-to-register instruction encoding using ModRM bytes, register operands, width selection, opcode emission, and REX…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 25:14</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/004-encoding-memory-operands-with-modrm-and-mov/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/004_hu_20df3a9c3470d8e.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding Memory Operands with ModRM and MOV</h3>
+					
+						<p class="video-entries__description">Extending the encoder from register operands to memory operands using ModRM addressing forms, including base-register memory accesses and…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 16:15</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/005-encoding-sib-addressing-and-displacements-with-mov/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/005_hu_7ce65ae6ca076a95.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding SIB Addressing and Displacements with MOV</h3>
+					
+						<p class="video-entries__description">Adding SIB byte support for scaled-index addressing, displacement encoding, no-base addressing, and canonicalization of some addressing…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 21:45</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/006-encoding-rip-relative-and-explicit-displacements-with-mov/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/006_hu_f72453adea925e40.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding RIP-Relative and Explicit Displacements with MOV</h3>
+					
+						<p class="video-entries__description">Adding RIP-relative addressing and improving displacement handling so the encoder can skip zero displacements.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 8:57</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/007-matching-instruction-forms-with-mov/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/007_hu_fe668734f199d371.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Matching Instruction Forms with MOV</h3>
+					
+						<p class="video-entries__description">Introducing instruction form metadata so the encoder can choose the correct encoding form based on operation, operand widths, and operand…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 14:55</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/008-encoding-mov-immediates-r-and-digit-forms/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/008_hu_7a8fb11171ffb683.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding MOV Immediates, &#43;r, and /digit Forms</h3>
+					
+						<p class="video-entries__description">Adding immediate operands, immediate-width selection, MOV immediate forms, opcode +r encodings, opcode-extension /digit encodings, and form…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 30:18</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/009-encoding-op-en-metadata-for-mov-forms/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/009_hu_a88d6eeb7de4a14c.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding Op/En Metadata for MOV Forms</h3>
+					
+						<p class="video-entries__description">Replacing operand-role guessing with explicit Op/En metadata, so each instruction form can describe which operand is encoded in ModRM.reg,…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 9:24</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/010-encoding-add-sub-mul-div-and-imul-idiv/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/010_hu_2a8d9285a7dc9aeb.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding ADD/SUB, MUL/DIV, and IMUL/IDIV</h3>
+					
+						<p class="video-entries__description">Implementing the core integer arithmetic instructions and the form metadata needed for register, memory, immediate, accumulator, and…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 42:41</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/011-encoding-and-or-xor-test-not-and-neg/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/011_hu_5b5b5812cbbbc4ac.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding AND/OR/XOR, TEST, NOT, and NEG</h3>
+					
+						<p class="video-entries__description">Adding bitwise logical instructions, test instructions, and unary arithmetic forms, reusing the same ModRM, immediate, and opcode-extension…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 15:45</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/012-encoding-sal-shl-shr-sar-and-rcl-rcr-rol-ror/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/012_hu_e3fc29ecd1357c49.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding SAL/SHL/SHR/SAR and RCL/RCR/ROL/ROR</h3>
+					
+						<p class="video-entries__description">Implementing shift and rotate instructions, including immediate-count forms, CL-count forms, and single-bit implicit-count forms.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 19:41</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/013-encoding-cmp-cmovcc-and-setcc/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/013_hu_da9ebefb6b7a986d.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding CMP, CMOVcc, and SETcc</h3>
+					
+						<p class="video-entries__description">Adding compare instructions and condition-code based result instructions, including aliases for equivalent x86 condition mnemonics.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 21:58</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/014-encoding-push-pop-jmp-jcc-and-call/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/014_hu_165d9aeddf8d5f8e.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding PUSH/POP, JMP/Jcc, and CALL</h3>
+					
+						<p class="video-entries__description">Implementing stack operations, relative branches, conditional jumps, and calls, including displacement width selection and relative-offset…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 52:08</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/015-encoding-lea-movsx-movsxd-movzx-and-cbw-cqo/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/015_hu_8bc40ca60832f277.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding LEA, MOVSX/MOVSXD/MOVZX, and CBW-CQO</h3>
+					
+						<p class="video-entries__description">Adding address calculation and integer sign/zero-extension instructions, including operand-local source widths and forms that force REX.W.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 30:06</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/016-encoding-bsf-bsr-bt-btc-btr-bts-lzcnt-tzcnt-and-popcnt/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/016_hu_fe56809136620ca3.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding BSF/BSR, BT/BTC/BTR/BTS, LZCNT/TZCNT, and POPCNT</h3>
+					
+						<p class="video-entries__description">Implementing bit scan, bit test, and bit count instructions, including mandatory prefixes and register/memory bit-operation forms.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 19:06</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/017-encoding-pop-r-m-jecxz-jrcxz-cpuid-rdtsc-nop-and-xchg/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/017_hu_502f98e77b781122.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding POP r/m, JECXZ/JRCXZ, CPUID/RDTSC, NOP, and XCHG</h3>
+					
+						<p class="video-entries__description">Filling in several scalar instruction gaps while improving the encoder test cases, explicit displacement helpers, and form matching…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 21:43</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/018-encoding-legacy-sse-vex-evex-prefixes-with-movaps-and-vmovap/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/018_hu_14a26b557f06e987.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding Legacy SSE/VEX/EVEX Prefixes with MOVAPS and VMOVAP</h3>
+					
+						<p class="video-entries__description">Using MOVAPS as the first vector instruction to introduce SSE register operands, legacy SSE encoding, VEX prefix encoding, EVEX prefix…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 59:47</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/019-encoding-evex-masks-with-movaps-pd-vmovaps-pd-movups-pd-and-vmovups-pd/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/019_hu_f53f0d9f2ffa8d0b.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding EVEX Masks with MOVAPS/PD, VMOVAPS/PD, MOVUPS/PD, and VMOVUPS/PD</h3>
+					
+						<p class="video-entries__description">Adding EVEX opmask and zeroing-mask support, then extending the vector move implementation across aligned and unaligned…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 27:31</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/020-encoding-movss-sd-vmovss-sd-movdqa-u-and-vmovdqa-u-8-16-32-64/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/020_hu_46be393cb783f526.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding MOVSS/SD, VMOVSS/SD, MOVDQA/U, and VMOVDQA/U/8/16/32/64</h3>
+					
+						<p class="video-entries__description">Expanding vector move support to scalar floating-point moves and integer vector moves, including stricter form matching, 3-operand VEX/EVEX…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 43:40</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/021-encoding-evex-rounding-broadcasts-with-add-vadd-vsub-vmul-and-vdiv-ss-sd-ps-pd/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/021_hu_bc763424dde797b4.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding EVEX Rounding/Broadcasts with ADD/VADD, VSUB, VMUL, and VDIV SS/SD/PS/PD</h3>
+					
+						<p class="video-entries__description">Adding scalar and packed floating-point arithmetic instructions, then extending EVEX encoding to support embedded rounding, rounding-control…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 44:49</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/022-encoding-evex-compressed-disp8-and-tuple-types/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/022_hu_38e7de25be7b128f.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding EVEX Compressed Disp8 and Tuple Types</h3>
+					
+						<p class="video-entries__description">Implementing EVEX compressed disp8 encoding, where an 8-bit displacement is scaled by the instruction tuple type instead of representing a…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 38:17</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/023-encoding-sae-with-comiss-sd-ucomiss-sd-and-shuf-vshuf-ps-pd/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/023_hu_559aa7c01ff2b6b2.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding SAE with COMISS/SD, UCOMISS/SD, and SHUF/VSHUF PS/PD</h3>
+					
+						<p class="video-entries__description">Adding SAE handling and implementing scalar floating-point compare instructions plus immediate-controlled shuffle instructions for packed…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 20:43</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/024-encoding-gpr-xmm-transfers-with-movd-q-and-vmovd-q/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/024_hu_80f606be82e46e8d.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding GPR/XMM Transfers with MOVD/Q and VMOVD/Q</h3>
+					
+						<p class="video-entries__description">Adding MOVD, MOVQ, VMOVD, and VMOVQ to the x86-64 encoder, covering transfers between general-purpose registers, memory operands, and…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 19:32</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/025-encoding-cvt-vcvt-and-cvtt-vcvtt-scalar-ss-sd-conversions/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/025_hu_f4b00b07a709a4fa.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding CVT/VCVT and CVTT/VCVTT Scalar SS/SD Conversions</h3>
+					
+						<p class="video-entries__description">Adding scalar x86-64 conversion instructions for moving between floating-point values and signed integers, including both rounded CVT forms…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 30:28</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/026-encoding-cvt-vcvt-and-cvtt-vcvtt-packed-ps-pd-dq-conversions/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/026_hu_9f877d5a42b29188.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding CVT/VCVT and CVTT/VCVTT Packed PS/PD/DQ Conversions</h3>
+					
+						<p class="video-entries__description">Adding packed floating-point and integer conversion instructions, including legacy SSE, VEX, and EVEX forms. This covers packed…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 29:14</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/027-encoding-cmp-vcmp-ss-sd-ps-pd-and-pcmpeq-pcmpgt-b-w-d-q/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/027_hu_37930d2ca947f70a.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding CMP/VCMP SS/SD/PS/PD and PCMPEQ/PCMPGT B/W/D/Q</h3>
+					
+						<p class="video-entries__description">Adding scalar and packed floating-point comparison instructions with immediate comparison predicates, followed by packed integer equality…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 32:49</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/028-encoding-lock-rep-prefixes-and-cs-ss-ds-es-fs-gs-segments/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/028_hu_34a19bc89b9ed3b8.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding LOCK/REP Prefixes and CS/SS/DS/ES/FS/GS Segments</h3>
+					
+						<p class="video-entries__description">Adding standalone instruction prefix forms for LOCK, REP, REPE/REPZ, and REPNE/REPNZ, then implementing segment override prefixes as memory…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 22:28</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/029-encoding-movs-cmps-lods-scas-stos-cmpxchg-xadd-fences-and-cache-ops/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/029_hu_5fa083acb2b6b1e2.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding MOVS/CMPS/LODS/SCAS/STOS, CMPXCHG/XADD, Fences, and Cache Ops</h3>
+					
+						<p class="video-entries__description">Implementing string instructions, atomic read-modify-write instructions, memory fences, pause, prefetch, and cache-line write-back/flush…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 24:35</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/030-encoding-flags-int-ud-rdtscp-xgetbv-rdrand-seed-iret-sysret-and-enter-leave/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/030_hu_2210e80064a0cf11.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding Flags, INT/UD, RDTSCP/XGETBV, RDRAND/SEED, IRET/SYSRET, and ENTER/LEAVE</h3>
+					
+						<p class="video-entries__description">Implementing flag manipulation, trap/undefined-instruction, timestamp/control-register utility, random-number, system return, and…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 28:23</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/031-encoding-adc-sbb-inc-dec-shld-shrd-bswap-movbe-and-crc32/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/031_hu_ba8cdf111bd14300.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding ADC/SBB, INC/DEC, SHLD/SHRD, BSWAP, MOVBE, and CRC32</h3>
+					
+						<p class="video-entries__description">Adding more integer and utility instruction encodings to the x86_64 encoder, including carry-aware arithmetic, increment/decrement forms,…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 33:06</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/032-encoding-andn-bextr-bzhi-mulx-pdep-pext-rorx-sarx-shlx-shrx/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/032_hu_dc415fc4a42e6284.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding ANDN, BEXTR, BZHI, MULX, PDEP/PEXT, RORX, SARX/SHLX/SHRX</h3>
+					
+						<p class="video-entries__description">Adding BMI1 and BMI2 instruction encodings to the x86_64 encoder, covering VEX-encoded integer bit-manipulation forms, three-operand…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 15:17</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/033-encoding-and-andn-or-xor-ps-pd-min-max-sqrt-rcp-and-rsqrt/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/033_hu_fa943fb098f1c6e1.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding AND/ANDN/OR/XOR PS/PD, MIN/MAX, SQRT, RCP, and RSQRT</h3>
+					
+						<p class="video-entries__description">Adding a set of scalar and packed floating-point SIMD utility instructions to the x86_64 encoder, covering logical vector operations,…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 48:50</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/034-generating-go-tests-from-nasm-comments/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/034_hu_4a9b2e7eb2be21b2.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Generating Go Tests from NASM Comments</h3>
+					
+						<p class="video-entries__description">Unifying the x86_64 encoder test cases by moving the Go-side test metadata into NASM comments, so each NASM instruction line also describes…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 22:39</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/035-encoding-blend-vblend-pblend-dp-insertps-and-extractps/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/035_hu_788c27a07139c01b.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding BLEND/VBLEND, PBLEND, DP, INSERTPS, and EXTRACTPS</h3>
+					
+						<p class="video-entries__description">Adding blend, dot-product, insert, and extract instruction encodings to the x86_64 encoder, including immediate-controlled blend masks,…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 28:40</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/036-encoding-lddqu-movdup-movhl-lhps-movh-lps-pd-movmsk-movnt-and-vmaskmov/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/036_hu_7cf0349dfd4913ff.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding LDDQU, MOVDUP, MOVHL/LHPS, MOVH/LPS/PD, MOVMSK, MOVNT, and VMASKMOV</h3>
+					
+						<p class="video-entries__description">Adding SSE and AVX MOV variants for duplicating, rearranging, masking, and transferring packed data, along with non-temporal stores and…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 41:38</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/037-encoding-aesenc-last-aesdec-last-aesimc-aeskeygenassist-and-pclmulqdq/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/037_hu_909c6e316954ee95.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding AESENC/LAST, AESDEC/LAST, AESIMC, AESKEYGENASSIST, and PCLMULQDQ</h3>
+					
+						<p class="video-entries__description">Adding AES round, inverse-round, key-generation, and inverse-mix-column instructions, together with carry-less multiplication for…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 15:22</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/038-encoding-padd-psub-padds-psubs-and-paddus-psubus/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/038_hu_54d9d649ce59d13c.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding PADD/PSUB, PADDS/PSUBS, and PADDUS/PSUBUS</h3>
+					
+						<p class="video-entries__description">Adding packed integer addition and subtraction across multiple lane widths, including signed and unsigned saturating forms for arithmetic…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 15:48</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/039-encoding-pmadd-pmuldq-udq-pmulh-and-pmull/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/039_hu_856d8494a5715a8b.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding PMADD, PMULDQ/UDQ, PMULH, and PMULL</h3>
+					
+						<p class="video-entries__description">Adding packed integer multiply instructions for low and high products, signed and unsigned widening multiplication, rounded high-word…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 21:59</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/040-encoding-pavg-pmaxs-u-pmins-u-and-psign/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/040_hu_93af8248426ad529.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding PAVG, PMAXS/U, PMINS/U, and PSIGN</h3>
+					
+						<p class="video-entries__description">Adding packed integer average, signed and unsigned minimum/maximum, and sign-control instructions across legacy SSE and VEX encodings.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 21:46</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/041-encoding-packss-packus-punpckl-and-punpckh/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/041_hu_b97dcab2ca0564d1.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding PACKSS, PACKUS, PUNPCKL, and PUNPCKH</h3>
+					
+						<p class="video-entries__description">Adding signed and unsigned packed narrowing with saturation, plus low- and high-half unpacking for interleaving packed integer lanes across…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 15:37</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/042-encoding-pshufb-d-lw-hw-and-palignr/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/042_hu_7749ff7295ef245c.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding PSHUFB/D/LW/HW and PALIGNR</h3>
+					
+						<p class="video-entries__description">Adding packed byte and doubleword shuffles, low- and high-word shuffles, and byte alignment across concatenated packed operands.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 13:00</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/043-encoding-psll-psra-psrl-vpsllv-vpsrav-and-vpsrlv/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/043_hu_7f2c87739984439b.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding PSLL, PSRA, PSRL, VPSLLV, VPSRAV, and VPSRLV</h3>
+					
+						<p class="video-entries__description">Adding packed logical and arithmetic shifts with immediate, scalar-count, and per-lane variable-count forms across SSE, AVX, and AVX2…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 42:30</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/044-encoding-pmovmskb-pmovsx-pmovzx-pextr-and-pinsr/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/044_hu_d61c5f7d190ca7b9.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding PMOVMSKB, PMOVSX, PMOVZX, PEXTR, and PINSR</h3>
+					
+						<p class="video-entries__description">Adding packed sign and zero extension, byte-mask extraction, and packed element insertion and extraction between vector, register, and…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 32:56</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/045-encoding-pabs-pand-pandn-por-pxor-and-ptest/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/045_hu_a2499aafc0b409aa.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding PABS, PAND, PANDN, POR, PXOR, and PTEST</h3>
+					
+						<p class="video-entries__description">Adding packed absolute value, bitwise logic, and packed test instructions across SSE, AVX, and AVX-512 forms.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 15:53</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/046-encoding-vpblendd-vpbroadcast-vbroadcast-vinsert-and-vextract/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/046_hu_3104617dc64eea2b.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding VPBLENDD, VPBROADCAST, VBROADCAST, VINSERT, and VEXTRACT</h3>
+					
+						<p class="video-entries__description">Adding packed blend selection, scalar-to-vector broadcasts, and 128-bit lane insertion and extraction across AVX, AVX2, and AVX-512…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 34:45</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/047-encoding-vperm2f128-vpermw-d-q-vpermilps-and-vpermps-pd/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/047_hu_11486527a072ff9c.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding VPERM2F128, VPERMW/D/Q, VPERMILPS, and VPERMPS/PD</h3>
+					
+						<p class="video-entries__description">Note: Bad audio (popping) from 18:40 to 20:40 because Linux...</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 27:40</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/048-encoding-vbroadcast-vcvtpd2ph-vcvtph2pd-ps-psx-and-vcvtps2ph-phx/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/048_hu_619689bc581155b7.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding VBROADCAST, VCVTPD2PH, VCVTPH2PD/PS/PSX, and VCVTPS2PH/PHX</h3>
+					
+						<p class="video-entries__description">Adding floating-point broadcast instructions and packed conversions between half-, single-, and double-precision values, including newer…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 28:29</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/049-encoding-vfmadd-vfmsub-vfnmadd-and-vfnmsub/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/049_hu_a885ca1b73b8ec26.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding VFMADD, VFMSUB, VFNMADD, and VFNMSUB</h3>
+					
+						<p class="video-entries__description">Adding fused multiply-add and multiply-subtract instructions, including negated variants, scalar and packed forms, and all 132/213/231…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 19:40</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/050-encoding-vgather-vscatter-vpgather-and-vpscatter/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/050_hu_a975d60f7c5bf175.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding VGATHER, VSCATTER, VPGATHER, and VPSCATTER</h3>
+					
+						<p class="video-entries__description">Adding floating-point and packed-integer gather and scatter instructions, together with VSIB addressing, vector index registers, high-16…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 50:33</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/051-encoding-avx-512-mask-register-instructions/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/051_hu_a7488fd02ddd67e8.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding AVX-512 Mask Register Instructions</h3>
+					
+						<p class="video-entries__description">Adding AVX-512 mask-register moves, arithmetic, logic, shifts, tests, and unpacking across byte, word, doubleword, and quadword element…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 32:58</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/052-encoding-vpcmp-vpmov-and-vpmaskmov/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/052_hu_389f25b7c714652a.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding VPCMP, VPMOV, and VPMASKMOV</h3>
+					
+						<p class="video-entries__description">Adding AVX-512 packed integer comparisons that produce mask-register results, conversions between vector elements and mask registers, and…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 18:02</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/053-encoding-unpckl-unpckh-round-ldmxcsr-and-stmxcsr/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/053_hu_896cb12e491c7275.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding UNPCKL, UNPCKH, ROUND, LDMXCSR, and STMXCSR</h3>
+					
+						<p class="video-entries__description">Adding low- and high-half floating-point unpacking, scalar and packed rounding, and MXCSR control-register loads and stores across legacy…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 15:58</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/054-encoding-vperm2i128-vpermilpd-vzeroupper-and-vzeroall/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/054_hu_e00dc97b80d31e14.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding VPERM2I128, VPERMILPD, VZEROUPPER, and VZEROALL</h3>
+					
+						<p class="video-entries__description">Adding 128-bit integer lane permutation, packed double-precision element permutation, and AVX state-transition instructions for clearing…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 6:49</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/055-encoding-cmpxchg8b-16b-cld-std-and-endbr64/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/055_hu_22216007d95d7001.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Encoding CMPXCHG8B/16B, CLD, STD, and ENDBR64</h3>
+					
+						<p class="video-entries__description">Adding 8- and 16-byte atomic compare-exchange instructions, direction-flag control, and the ENDBR64 landing-pad instruction used by CET…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 7:47</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/056-cleanup-and-validation/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/056_hu_83ac5233f77de662.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Cleanup and Validation</h3>
+					
+						<p class="video-entries__description">Cleaning up some of the code in the encoder and adding tests to validate forms.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 51:05</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/057-improving-performance/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/057_hu_7af5e14d2405f751.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Improving Performance</h3>
+					
+						<p class="video-entries__description">Code cleanup and performance improvements.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 1:13:44</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/058-recording-labels-and-fixups/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/058_hu_c5b0d1aff1bf99cf.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Recording Labels and Fixups</h3>
+					
+						<p class="video-entries__description">Before moving onto writing relocatable object files I need to track various offsets in the encoded bytes for things like labels and fixups.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 27:07</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/059-fixing-an-sae-bug/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/059_hu_90b166f8f211e5ed.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Fixing an SAE Bug</h3>
+					
+						<p class="video-entries__description">I fix an SAE bug in the VCVTPS2PH instruction and do some final clean up.</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 12:20</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/062-fixing-destructive-fixups/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/062_hu_ea414844ec845fb0.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Fixing Destructive Fixups</h3>
+					
+						<p class="video-entries__description">Before I can reliably create ELF relocations I need to fix my encoder fixups, which are destroying important data required for encoding the…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 8:27</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/x86-64-encoder/066-fixing-evex-and-memory-encoding-edge-cases/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/066_hu_5234f0150482e40f.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Fixing EVEX and Memory Encoding Edge Cases</h3>
+					
+						<p class="video-entries__description">I fix an incorrect LOCK prefix byte and displacement-selection bugs affecting byte-width and EVEX no-base memory operands, then update…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 20:09</p>
+					
+				</div>
+			</a>
+		</li>
+	
+</ol>
+
+			
+		</article>
+	
+
+			</div>
+		</main>
+
+		<footer class="footer">
+			<div class="footer__inner">
+				<p>
+					Copyright &copy;
+					
+					
+					
+					
+						
+						
+					
+					
+						2026
+					
+					Jake Lucas (Polyscone)
+				</p>
+
+				<p class="footer__licence">
+					<a href="https://creativecommons.org/licenses/by/4.0" rel="license">
+						CC BY 4.0 <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt=""><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="">
+					</a>
+				</p>
+			</div>
+		</footer>
+	</body>
+</html>

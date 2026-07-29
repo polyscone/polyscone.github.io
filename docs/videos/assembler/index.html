@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+	<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<title>Assembler | Polyscone</title>
+		<meta name="description" content="Building an assembly-language frontend in Go: scanning, comment trivia, expression parsing, declarations, memory operands and diagnostics.">
+
+		<link rel="canonical" href="http://localhost:1313/videos/assembler/">
+		
+		<link rel="stylesheet" href="/css/style.min.3f0baca9f74bb709c807e123f84d340fc117db1f083966b2aa55aaf120282c58.css">
+		<script data-goatcounter="https://polyscone.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+	</head>
+	<body>
+		<header class="header">
+			<div class="header__inner">
+				<p class="header__title">
+					<a href="/">Polyscone</a><br>
+					<span class="header__tagline">Notes, projects, and other technical stuff</span>
+				</p>
+
+				
+				<img src="/images/avatar.c9f9c08a211f6e561d5747e0b235ea05be39108fd9e39727abd566516e42bb2a.jpg" class="header__avatar" alt="Polyscone">
+			</div>
+		</header>
+
+		<nav class="navigation">
+			<ul class="navigation__inner">
+				<li><a href="/">Home</a></li>
+				<li><a href="/posts/">Posts</a></li>
+				<li><a href="/tags/">Tags</a></li>
+				<li><a aria-current="page" href="/videos/">Videos</a></li>
+				<li class="navigation__social-start">
+					<a href="https://x.com/polyscone" aria-label="Twitter" title="Twitter" target="_blank" rel="noreferrer">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 15.6 6.4 22H3.3l7.2-8.2L2.8 2h6.4l4.4 5.8L18.9 2Zm-1.1 17.9h1.7L8.3 4H6.5l11.3 15.9Z"/>
+						</svg>
+					</a>
+				</li>
+				<li>
+					<a href="https://bsky.app/profile/polyscone.bsky.social" aria-label="Bluesky" title="Bluesky" target="_blank" rel="noreferrer">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M12 10.8c-1.1-2.1-4-6.1-6.8-8C2.6.9 1.6 1.3.9 1.6.1 1.9 0 3.1 0 3.8s.4 5.7.6 6.5c.8 2.7 3.7 3.7 6.4 3.4-4.7.7-8.8 2.4-3.4 8.4 6 6.2 8.2-1.3 8.4-2.8.2 1.5 2.4 9 8.4 2.8 5.4-6 1.3-7.7-3.4-8.4 2.7.3 5.6-.7 6.4-3.4.2-.8.6-5.8.6-6.5s-.1-1.9-.9-2.2c-.7-.3-1.7-.7-4.3 1.2-2.8 1.9-5.7 5.9-6.8 8Z"/>
+						</svg>
+					</a>
+				</li>
+				<li>
+					<a href="https://youtube.com/@polyscone" aria-label="YouTube" title="YouTube" target="_blank" rel="noreferrer">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.5v-7l6.3 3.5-6.3 3.5Z"/>
+						</svg>
+					</a>
+				</li>
+			</ul>
+		</nav>
+
+		<main class="main">
+			<div class="main__inner">
+				
+	
+		<article class="post">
+			<p><a href="/videos/">Videos</a> / <a href="/videos/compiler-toolchain/">Compiler Toolchain Development</a></p>
+			<h1>Assembler</h1>
+
+			<p>Building an assembler frontend in Go without AI assistance, as part of <a href="/videos/compiler-toolchain/">Compiler Toolchain Development</a>. The project covers a language for describing sections, data, functions and instructions, with a scanner and recursive descent parser. Topics include source locations, comment trivia, expression precedence, syntax trees, memory operands, width suffixes, alignment and declaration attributes.</p>
+<p>The recordings also cover comment-driven parser fixtures, syntax-tree traversal and formatting, diagnostics, error recovery and scanner bugs. Concrete examples show how source text becomes tokens and structured declarations, and how the parser handles malformed input.</p>
+
+
+			
+				<p><a href="https://www.youtube.com/playlist?list=PLQE7BMSLFGHE" target="_blank" rel="noreferrer">Watch the Assembler playlist on YouTube</a></p>
+			
+
+			
+
+			
+			
+
+			
+				<h2 id="videos">Videos</h2>
+				<ol class="video-entries">
+	
+		<li>
+			<a href="/videos/assembler/071-writing-a-scanner-for-an-assembler/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/071_hu_fbcc58891bd30fd2.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Writing a Scanner for an Assembler</h3>
+					
+						<p class="video-entries__description">I design the initial syntax for the assembler, then implement a scanner with source files, token kinds, line and column lookup, whitespace…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 1:20:43</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/assembler/072-tracking-trivia-tokens-in-the-scanner/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/072_hu_cd7013424fd3d80a.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Tracking Trivia Tokens in the Scanner</h3>
+					
+						<p class="video-entries__description">I add support for tracking comment trivia in the assembler's scanner, including leading comments, inline comments, and comments before the…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 31:04</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/assembler/073-fixing-scanner-bugs/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/073_hu_13dca8e50a9a47e6.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Fixing Scanner Bugs</h3>
+					
+						<p class="video-entries__description">I clean up the scanner API, then add regression tests and fix bugs in ellipsis detection, comment trivia at the end of a file, and…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 11:24</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/assembler/074-comment-driven-parser-test-setup/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/074_hu_85c56f217704eb27.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Comment-Driven Parser Test Setup</h3>
+					
+						<p class="video-entries__description">I set up parser tests that put expected AST output as s-expression comments beside assembler source. I build a test runner that scans source…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 37:50</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/assembler/075-recursive-descent-expression-parsing/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/075_hu_5d80738c61419edc.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Recursive Descent Expression Parsing</h3>
+					
+						<p class="video-entries__description">I add recursive descent parsing for assembler expressions, using separate expression, term, and factor parsers to handle operator…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 34:42</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/assembler/076-parsing-section-and-object-declarations/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/076_hu_85e5771cba082997.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Parsing Section and Object Declarations</h3>
+					
+						<p class="video-entries__description">I add parsing for section and object declarations, including optional section alignment, array types with explicit or inferred lengths, and…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 41:23</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/assembler/077-parsing-import-and-function-declarations/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/077_hu_8f2daa9bc84db53a.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Parsing Import and Function Declarations</h3>
+					
+						<p class="video-entries__description">I add parsing for import and function declarations, including namespaced attributes, instruction blocks, labels, alignment statements, and…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 50:41</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/assembler/078-fixing-scanner-and-parser-bugs/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/078_hu_cfa5bd675c9cb73b.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Fixing Scanner and Parser Bugs</h3>
+					
+						<p class="video-entries__description">I work through scanner and parser bugs before moving on to semantic analysis. I switch source storage to a byte slice, fix EOF handling and…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 54:45</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/assembler/079-unary-prefix-operators-and-object-align-and-attributes/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/079_hu_58a8396ea83e4be9.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Unary Prefix Operators and Object Align and Attributes</h3>
+					
+						<p class="video-entries__description">I finish the remaining parser features before moving on to semantic analysis. I add optional alignment and attributes to object…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 27:22</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/assembler/080-restructuring-assembler-packages/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/080_hu_8c111a0c53b55f1a.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Restructuring Assembler Packages</h3>
+					
+						<p class="video-entries__description">I consolidate the scanner, parser, tokens and AST into a single assembler package before moving on to semantic analysis. I resolve name…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 13:34</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/assembler/081-symbol-resolution-and-constant-expression-evaluation/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/081_hu_f31220180c9041c3.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Symbol Resolution and Constant Expression Evaluation</h3>
+					
+						<p class="video-entries__description">I start the assembler's semantic analysis with a resolver that maps AST nodes to symbols. I add symbol and type representations, scopes with…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 39:20</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/assembler/082-section-and-object-symbol-resolution/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/082_hu_8b3bd6cd72131b5.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Section and Object Symbol Resolution</h3>
+					
+						<p class="video-entries__description">I extend the assembler's resolver to handle section and object declarations. I add section attributes and constant alignment evaluation,…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 42:05</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/assembler/083-resolving-imports-functions-and-aligns/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/083_hu_5dce2b0a352459b.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Resolving Imports, Functions, and Aligns</h3>
+					
+						<p class="video-entries__description">I extend the assembler's resolver to handle object alignment, standalone align statements, imports and function bodies. I cache evaluated…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 26:49</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/assembler/084-resolving-forward-references-for-labels-functions-and-objects/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/084_hu_dcb557c3e63d390e.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Resolving Forward References for Labels, Functions, and Objects</h3>
+					
+						<p class="video-entries__description">I add a declaration pass to the assembler's resolver so labels, functions and objects can be referenced before they appear in the source. I…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 21:46</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/assembler/085-resolving-array-types-and-inferring-lengths/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/085_hu_dfeb1f459b59d439.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Resolving Array Types and Inferring Lengths</h3>
+					
+						<p class="video-entries__description">I extend the assembler's resolver to handle array types, evaluate explicit lengths and infer lengths from simple initialiser lists. I…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 37:37</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/assembler/086-resolving-nested-array-types/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/086_hu_5095c5fc6a60a6f8.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Resolving Nested Array Types</h3>
+					
+						<p class="video-entries__description">I extend the assembler's type resolver to support nested arrays with explicit and inferred lengths, using the largest initialiser at each…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 29:18</p>
+					
+				</div>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/videos/assembler/087-fixing-resolver-bugs-and-adding-validation/">
+				
+				
+					
+					<img src="/images/videos/compiler_toolchain/087_hu_3bfd5585f7b415ec.webp" width="480" height="270" alt="" loading="lazy" decoding="async">
+				
+				<div class="video-entries__details">
+					<h3>Fixing Resolver Bugs and Adding Validation</h3>
+					
+						<p class="video-entries__description">I work through the assembler resolver's remaining fixes and validation checks before moving on to instruction lowering. I fix string…</p>
+					
+					
+						
+						<p class="video-entries__duration">Duration: 56:06</p>
+					
+				</div>
+			</a>
+		</li>
+	
+</ol>
+
+			
+		</article>
+	
+
+			</div>
+		</main>
+
+		<footer class="footer">
+			<div class="footer__inner">
+				<p>
+					Copyright &copy;
+					
+					
+					
+					
+						
+						
+					
+					
+						2026
+					
+					Jake Lucas (Polyscone)
+				</p>
+
+				<p class="footer__licence">
+					<a href="https://creativecommons.org/licenses/by/4.0" rel="license">
+						CC BY 4.0 <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt=""><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="">
+					</a>
+				</p>
+			</div>
+		</footer>
+	</body>
+</html>

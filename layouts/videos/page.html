@@ -1,0 +1,63 @@
+{{define "main"}}
+	{{$embedURL := printf "https://www.youtube-nocookie.com/embed/%s" .Params.youtube_id}}
+	{{$watchURL := printf "https://www.youtube.com/watch?v=%s" .Params.youtube_id}}
+
+	<article class="post">
+		<p><a href="{{"/videos/" | relURL}}">Videos</a> / <a href="{{.Parent.RelPermalink}}">{{.Parent.Title}}</a></p>
+		<h1>{{.Title}}</h1>
+
+		<iframe class="video-player" src="{{$embedURL}}" title="{{.Title}}" width="780" height="439" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+		<h2>Description</h2>
+		{{.Content}}
+		<p>Published <time datetime="{{.PublishDate.Format "2006-01-02"}}">{{.PublishDate.Format "January 2, 2006"}}</time>.</p>
+		<p><a href="{{$watchURL}}" target="_blank" rel="noreferrer">Watch on YouTube</a></p>
+
+		{{with .Params.chapters}}
+			<h2>Timestamps</h2>
+			<ol class="video-chapters">
+				{{range .}}
+					<li><a href="{{$watchURL}}&amp;t={{.start}}s" data-start="{{.start}}">{{.time}} - {{.title}}</a></li>
+				{{end}}
+			</ol>
+		{{end}}
+
+		<nav class="post-navigation" aria-label="Series videos">
+			{{with .NextInSection}}<a href="{{.RelPermalink}}">&laquo; {{.Title}}</a>{{else}}<span></span>{{end}}
+			<a href="{{.Parent.RelPermalink}}">Series</a>
+			{{with .PrevInSection}}<a href="{{.RelPermalink}}">{{.Title}} &raquo;</a>{{else}}<span></span>{{end}}
+		</nav>
+	</article>
+
+	{{$video := dict "@context" "https://schema.org" "@type" "VideoObject" "@id" (printf "%s#video" .Permalink) "name" .Title "description" .Plain "thumbnailUrl" (slice (printf "https://i.ytimg.com/vi/%s/hqdefault.jpg" .Params.youtube_id)) "embedUrl" $embedURL "url" .Permalink}}
+	{{if not .PublishDate.IsZero}}
+		{{$video = merge $video (dict "uploadDate" (.PublishDate.Format "2006-01-02T15:04:05Z07:00"))}}
+	{{end}}
+	{{with .Params.duration}}
+		{{$video = merge $video (dict "duration" (printf "PT%dS" (int .)))}}
+	{{end}}
+	<script type="application/ld+json">{{$video | jsonify | safeJS}}</script>
+
+	<script>
+		const player = document.querySelector(".video-player")
+
+		document.querySelectorAll(".video-chapters a[data-start]").forEach(link => {
+			link.addEventListener("click", event => {
+				if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+					return
+				}
+
+				event.preventDefault()
+
+				const url = new URL(player.src)
+
+				url.searchParams.set("start", link.dataset.start)
+				url.searchParams.set("autoplay", "1")
+
+				player.src = url.href
+				player.scrollIntoView({block: "center"})
+				player.focus()
+			})
+		})
+	</script>
+{{end}}
