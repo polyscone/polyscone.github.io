@@ -1,0 +1,6 @@
+{{if gt .WordCount 200}}
+	<section class="toc">
+		<strong>Contents</strong>
+		{{safeHTML (replace .TableOfContents "TableOfContents" "toc")}}
+	</section>
+{{end}}

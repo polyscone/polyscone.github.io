@@ -1,0 +1,8 @@
+{{define "main"}}
+	{{$posts := where .Site.RegularPages "FirstSection.Params.content_kind" "post"}}
+	<section aria-label="Latest posts">
+		{{range $posts.ByDate.Reverse}}
+			{{partial "post-preview.html" .}}
+		{{end}}
+	</section>
+{{end}}

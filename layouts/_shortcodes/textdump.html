@@ -1,0 +1,8 @@
+{{$title := default "Text dump" (trim (.Get "title") "\n ")}}
+{{$content := trim .Inner "\n "}}
+
+<div class="textdump" data-title="{{$title}}">
+	<strong>{{$title}}</strong>
+	<button onclick="this.parentNode.querySelector('textarea').select(); document.execCommand('copy'); return false">Copy</button>
+	<textarea readonly>{{$content}}</textarea>
+</div>

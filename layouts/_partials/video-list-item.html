@@ -1,0 +1,8 @@
+<li{{with .Params.index_id}} id="{{.}}"{{end}}>
+	{{if .Params.parent_series}}
+		<h3><a href="{{.RelPermalink}}">{{.Title}}</a></h3>
+	{{else}}
+		<h2><a href="{{.RelPermalink}}">{{.Title}}</a></h2>
+	{{end}}
+	<p>{{.Description}}</p>
+</li>

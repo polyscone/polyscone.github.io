@@ -1,0 +1,32 @@
+{{define "main"}}
+	{{$seriesPages := .FirstSection.RegularPages.ByDate}}
+	{{$partNumber := 0}}
+	{{if and (eq .FirstSection.Params.content_kind "post") (gt (len $seriesPages) 1)}}
+		{{$currentPage := .}}
+		{{range $index, $page := $seriesPages}}
+			{{if eq $page.RelPermalink $currentPage.RelPermalink}}
+				{{$partNumber = add $index 1}}
+			{{end}}
+		{{end}}
+	{{end}}
+
+	<article class="post">
+		<h1>
+			{{if .FirstSection.Title}}
+				<span>{{.FirstSection.Title}}</span>
+			{{end}}
+
+			{{with $partNumber}}Part {{.}}: {{end}}{{.Title}}
+		</h1>
+
+		<p>{{i18n "posted_at"}} <time datetime="{{.PublishDate.Format "2006-01-02"}}">{{.PublishDate.Format "January 2, 2006"}}</time></p>
+
+		{{partial "toc.html" .}}
+
+		{{partial "post-navigation.html" .}}
+
+		{{.Content | replaceRE "(<h[2-6] id=\"(.+?)\".*?>)(.*?)(</h[2-6]>)" "${1}<a href=\"#${2}\" class=\"section-link section-link--left\">§</a>${3}<a href=\"#${2}\" class=\"section-link section-link--right\">§</a>${4}" | safeHTML}}
+
+		{{partial "post-navigation.html" .}}
+	</article>
+{{end}}

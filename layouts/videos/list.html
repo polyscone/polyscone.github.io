@@ -1,0 +1,44 @@
+{{define "main"}}
+	{{if eq .RelPermalink ("/videos/" | relURL)}}
+		<h1>{{.Title}}</h1>
+		{{.Content}}
+
+		<ol class="video-list">
+			{{range .Sections.ByWeight}}
+				{{if not .Params.parent_series}}
+					{{partial "video-list-item.html" .}}
+				{{end}}
+			{{end}}
+		</ol>
+	{{else}}
+		<article class="post">
+			<p><a href="{{"/videos/" | relURL}}">Videos</a>{{with .Params.parent_series}} / <a href="{{(site.GetPage .).RelPermalink}}">Compiler Toolchain Development</a>{{end}}</p>
+			<h1>{{.Title}}</h1>
+
+			{{.Content}}
+
+			{{with .Params.playlist}}
+				<p><a href="{{.}}" target="_blank" rel="noreferrer">Watch the {{$.Title}} playlist on YouTube</a></p>
+			{{end}}
+
+			{{with .Params.subseries}}
+				<h2>Toolchain subseries</h2>
+				<ol class="video-list">
+					{{range .}}
+						{{partial "video-list-item.html" (site.GetPage .)}}
+					{{end}}
+				</ol>
+			{{end}}
+
+			{{$videos := .RegularPages}}
+			{{with .Params.collection}}
+				{{$videos = where $.FirstSection.RegularPagesRecursive "Params.collection" .}}
+			{{end}}
+
+			{{with $videos}}
+				<h2 id="videos">Videos</h2>
+				{{partial "video-table.html" (dict "videos" .ByWeight)}}
+			{{end}}
+		</article>
+	{{end}}
+{{end}}

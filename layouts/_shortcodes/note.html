@@ -1,0 +1,9 @@
+<aside class="note">
+	{{- $markdown := markdownify .Inner -}}
+
+	{{- if not (findRE "<[h|p][^>]*>" $markdown) -}}
+		<p>{{$markdown}}</p>
+	{{- else -}}
+		{{$markdown}}
+	{{- end -}}
+</aside>

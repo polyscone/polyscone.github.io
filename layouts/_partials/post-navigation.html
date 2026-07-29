@@ -1,0 +1,5 @@
+<nav class="post-navigation">
+	{{if .PrevInSection}}<a href="{{.PrevInSection.RelPermalink}}">&laquo; {{.PrevInSection.Title}}</a>{{else}}<span></span>{{end}}
+	{{if gt (len .FirstSection.RegularPages) 1}}<a href="{{.FirstSection.RelPermalink}}">Series</a>{{else}}<span></span>{{end}}
+	{{if .NextInSection}}<a href="{{.NextInSection.RelPermalink}}">{{.NextInSection.Title}} &raquo;</a>{{else}}<span></span>{{end}}
+</nav>
