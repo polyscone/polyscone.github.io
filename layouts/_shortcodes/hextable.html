@@ -1,0 +1,290 @@
+{{$start := int (default 0 (.Get "start"))}}
+
+{{$extended := (dict
+	"80" "€"
+	"82" "‚"
+	"83" "ƒ"
+	"84" "„"
+	"85" "…"
+	"86" "†"
+	"87" "‡"
+	"88" "ˆ"
+	"89" "‰"
+	"8a" "Š"
+	"8b" "‹"
+	"8c" "Œ"
+	"8e" "Ž"
+	"91" "‘"
+	"92" "’"
+	"93" "“"
+	"94" "”"
+	"95" "•"
+	"96" "–"
+	"97" "—"
+	"98" "˜ "
+	"99" "™"
+	"9a" "š"
+	"9b" "›"
+	"9c" "œ"
+	"9e" "ž"
+	"9f" "Ÿ"
+	"a1" "¡"
+	"a2" "¢"
+	"a3" "£"
+	"a4" "¤"
+	"a5" "¥"
+	"a6" "¦"
+	"a7" "§"
+	"a8" "¨"
+	"a9" "©"
+	"aa" "ª"
+	"ab" "«"
+	"ac" "¬"
+	"ae" "®"
+	"af" "¯"
+	"b0" "°"
+	"b1" "±"
+	"b2" "²"
+	"b3" "³"
+	"b4" "´"
+	"b5" "µ"
+	"b6" "¶"
+	"b7" "·"
+	"b8" "¸"
+	"b9" "¹"
+	"ba" "º"
+	"bb" "»"
+	"bc" "¼"
+	"bd" "½"
+	"be" "¾"
+	"bf" "¿"
+	"c0" "À"
+	"c1" "Á"
+	"c2" "Â"
+	"c3" "Ã"
+	"c4" "Ä"
+	"c5" "Å"
+	"c6" "Æ"
+	"c7" "Ç"
+	"c8" "È"
+	"c9" "É"
+	"ca" "Ê"
+	"cb" "Ë"
+	"cc" "Ì"
+	"cd" "Í"
+	"ce" "Î"
+	"cf" "Ï"
+	"d0" "Ð"
+	"d1" "Ñ"
+	"d2" "Ò"
+	"d3" "Ó"
+	"d4" "Ô"
+	"d5" "Õ"
+	"d6" "Ö"
+	"d7" "×"
+	"d8" "Ø"
+	"d9" "Ù"
+	"da" "Ú"
+	"db" "Û"
+	"dc" "Ü"
+	"dd" "Ý"
+	"de" "Þ"
+	"df" "ß"
+	"e0" "à"
+	"e1" "á"
+	"e2" "â"
+	"e3" "ã"
+	"e4" "ä"
+	"e5" "å"
+	"e6" "æ"
+	"e7" "ç"
+	"e8" "è"
+	"e9" "é"
+	"ea" "ê"
+	"eb" "ë"
+	"ec" "ì"
+	"ed" "í"
+	"ee" "î"
+	"ef" "ï"
+	"f0" "ð"
+	"f1" "ñ"
+	"f2" "ò"
+	"f3" "ó"
+	"f4" "ô"
+	"f5" "õ"
+	"f6" "ö"
+	"f7" "÷"
+	"f8" "ø"
+	"f9" "ù"
+	"fa" "ú"
+	"fb" "û"
+	"fc" "ü"
+	"fd" "ý"
+	"fe" "þ"
+	"ff" "ÿ"
+)}}
+{{$offsetAddition := 0}}
+{{$rows := split (trim .Inner "\n ") "\n"}}
+
+<div class="hex-table">
+	<div class="hex-table__inner">
+		<div class="hex-table__gutter">
+			<div class="hex-table__row">Offset</div>
+
+			{{$i := 0}}
+			{{range $_, $row := $rows}}
+				{{if not (strings.HasSuffix $row "+")}}
+					<div class="hex-table__row{{if not $row}} hex-table__row--empty{{end}}">
+						{{- $offset := add $start (mul $i 16) -}}
+						{{- $offsetStart := printf "%02x" (add (sub $offset (mod $offset 16)) $offsetAddition) -}}
+						{{- $zeroCount := sub 8 (countrunes $offsetStart) -}}
+
+						<span class="hex-table__ghost">{{strings.Repeat $zeroCount "0"}}</span>{{$offsetStart}}
+					</div>
+
+					{{- $i = add $i 1 -}}
+				{{else}}
+					{{$offsetAddition = add $offsetAddition (int (trim $row "+"))}}
+				{{end}}
+			{{end}}
+		</div>
+
+		{{- /* Dummy comment to auto-remove whitespace between HTML elements */ -}}
+
+		<div class="hex-table__content">
+			<div class="hex-table__row">
+				{{$startRow := sub $start (mod $start 16)}}
+				{{range seq $start (add $start 15)}}
+					{{- $col := mod . 16 -}}
+					{{- $row := sub (sub . $col) $startRow -}}
+
+					{{- if eq $row 0 -}}
+						{{- printf "%02x " (add $row $col) -}}
+					{{- else -}}
+						<span class="hex-table__col--next-row">{{- printf "%02x " (add $row $col) -}}</span>
+					{{- end -}}
+				{{end}}
+			</div>
+
+			{{$highlighting := false}}
+
+			{{range $_, $row := $rows}}
+				{{$row = trim $row "\n "}}
+
+				{{if not (strings.HasSuffix $row "+")}}
+					<div class="hex-table__row{{if not $row}} hex-table__row--empty{{end}}">
+						{{- if $row -}}
+							{{- if $highlighting -}}
+								<mark class="hex-table__highlight">
+							{{- end -}}
+
+							{{- $hexVals := split $row " " -}}
+							{{- if lt (len $hexVals) 16 -}}
+								{{- $hexVals = $hexVals | append (split (trim (strings.Repeat (sub 16 (len $hexVals)) ".. ") " ") " ") -}}
+							{{- end -}}
+							{{- range $hexVals -}}
+								{{- $hex := trim . "<>" -}}
+
+								{{- if ge (len .) 3 -}}
+									{{- if eq (slicestr . 0 1) "<" -}}
+										{{- $highlighting = true -}}
+
+										<mark class="hex-table__highlight">
+									{{- end -}}
+								{{- end -}}
+
+								{{- if eq $hex ".." -}}
+									{{- safeHTML (printf " &nbsp;&nbsp; ") -}}
+								{{- else -}}
+									{{- printf " %v " $hex -}}
+								{{- end -}}
+
+								{{- if ge (len .) 3 -}}
+									{{- if and $highlighting (eq (slicestr . (sub (len .) 1) (len .)) ">") -}}
+										{{- $highlighting = false -}}
+
+										</mark>
+									{{- end -}}
+								{{- end -}}
+							{{- end -}}
+
+							{{- if $highlighting -}}
+								</mark>
+							{{- end -}}
+						{{- else -}}
+							&nbsp;
+						{{- end -}}
+					</div>
+				{{end}}
+			{{end}}
+		</div>
+
+		{{- /* Dummy comment to auto-remove whitespace between HTML elements */ -}}
+
+		<div class="hex-table__ascii">
+			<div class="hex-table__row">Decoded Text</div>
+
+			{{$highlighting := false}}
+
+			{{range $_, $row := $rows}}
+				{{$row = trim $row "\n "}}
+
+				{{if not (strings.HasSuffix $row "+")}}
+					<div class="hex-table__row{{if not $row}} hex-table__row--empty{{end}}">
+						{{- if $row -}}
+							{{- $hexVals := split $row " " -}}
+							{{- if lt (len $hexVals) 16 -}}
+								{{- $hexVals = $hexVals | append (split (trim (strings.Repeat (sub 16 (len $hexVals)) ".. ") " ") " ") -}}
+							{{- end -}}
+
+							{{- if $highlighting -}}
+								<mark class="hex-table__highlight">
+							{{- end -}}
+
+							{{range $hexVals}}
+								{{- $hex := trim . "<>" -}}
+
+								{{- if ge (len .) 3 -}}
+									{{- if eq (slicestr . 0 1) "<" -}}
+										{{- $highlighting = true -}}
+
+										<mark class="hex-table__highlight">
+									{{- end -}}
+								{{- end -}}
+
+								{{- if eq $hex ".." -}}
+									&nbsp;
+								{{- else -}}
+									{{- $rune := int (printf "0x%v" $hex) -}}
+									{{- if eq $rune 0x20 -}}
+										&nbsp;
+									{{- else if or (and (ge $rune 0x21) (le $rune 0x7e)) -}}
+										{{- printf "%c" $rune -}}
+									{{- else if index $extended (lower $hex) -}}
+										{{- index $extended (lower $hex) -}}
+									{{- else -}}
+										{{- printf "." -}}
+									{{- end -}}
+								{{- end -}}
+
+								{{- if ge (len .) 3 -}}
+									{{- if and $highlighting (eq (slicestr . (sub (len .) 1) (len .)) ">") -}}
+										{{- $highlighting = false -}}
+
+										</mark>
+									{{- end -}}
+								{{- end -}}
+							{{end}}
+
+							{{- if $highlighting -}}
+								</mark>
+							{{- end -}}
+						{{- else -}}
+							&nbsp;
+						{{- end -}}
+					</div>
+				{{end}}
+			{{end}}
+		</div>
+	</div>
+</div>

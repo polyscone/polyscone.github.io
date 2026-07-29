@@ -1,0 +1,14 @@
+{{define "main"}}
+	<h1>{{.Title}}</h1>
+
+	{{$pages := .RegularPages.ByDate}}
+	<ol class="post-index">
+		{{range $index, $page := $pages}}
+			{{$partNumber := 0}}
+			{{if and (eq $.Params.content_kind "post") (gt (len $pages) 1)}}
+				{{$partNumber = add $index 1}}
+			{{end}}
+			{{partial "post-index-item.html" (dict "page" $page "partNumber" $partNumber)}}
+		{{end}}
+	</ol>
+{{end}}

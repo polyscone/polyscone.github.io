@@ -1,0 +1,9 @@
+{{define "main"}}
+	<h1>{{.Title}}</h1>
+
+	<ol class="video-list">
+		{{range .Params.series}}
+			{{partial "video-list-item.html" .}}
+		{{end}}
+	</ol>
+{{end}}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="{{.Site.Language.Locale}}">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0">
+		<title>{{if .IsHome}}{{.Site.Title}}{{else}}{{.Title}} | {{.Site.Title}}{{end}}</title>
+		<meta name="description" content="{{.Description | default .Summary | default .Site.Params.Description}}">
+
+		<link rel="canonical" href="{{.Permalink}}">
+		{{$style := resources.Get "css/style.css" | resources.Minify | resources.Fingerprint}}
+		<link rel="stylesheet" href="{{$style.RelPermalink}}">
+		<script data-goatcounter="https://polyscone.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+	</head>
+	<body>
+		<header class="header">
+			<div class="header__inner">
+				<p class="header__title">
+					<a href="{{"/" | relURL}}">{{.Site.Title}}</a><br>
+					<span class="header__tagline">{{.Site.Params.Tagline}}</span>
+				</p>
+
+				{{$avatar := resources.Get "images/avatar.jpg" | resources.Fingerprint}}
+				<img src="{{$avatar.RelPermalink}}" class="header__avatar" alt="{{.Site.Title}}">
+			</div>
+		</header>
+
+		<nav class="navigation">
+			<ul class="navigation__inner">
+				<li><a{{if .IsHome}} aria-current="page"{{end}} href="{{"/" | relURL}}">{{i18n "nav_home"}}</a></li>
+				<li><a{{if or (eq .Section "posts") (eq .FirstSection.Params.content_kind "post")}} aria-current="page"{{end}} href="{{"/posts/" | relURL}}">Posts</a></li>
+				<li><a{{if eq .Section "tags"}} aria-current="page"{{end}} href="{{"/tags/" | relURL}}">Tags</a></li>
+				<li><a{{if eq .Section "videos"}} aria-current="page"{{end}} href="{{"/videos/" | relURL}}">Videos</a></li>
+				<li>
+					<a href="{{.Site.Params.twitter_url}}" aria-label="Twitter" title="Twitter" target="_blank" rel="noreferrer">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 15.6 6.4 22H3.3l7.2-8.2L2.8 2h6.4l4.4 5.8L18.9 2Zm-1.1 17.9h1.7L8.3 4H6.5l11.3 15.9Z"/>
+						</svg>
+					</a>
+				</li>
+				<li>
+					<a href="{{.Site.Params.youtube_url}}" aria-label="YouTube" title="YouTube" target="_blank" rel="noreferrer">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.5v-7l6.3 3.5-6.3 3.5Z"/>
+						</svg>
+					</a>
+				</li>
+			</ul>
+		</nav>
+
+		<main class="main">
+			<div class="main__inner">
+				{{block "main" .}}{{end}}
+			</div>
+		</main>
+
+		<footer class="footer">
+			<div class="footer__inner">
+				<p>
+					Copyright &copy;
+					{{$firstYear := now.Year}}
+					{{$lastYear := $firstYear}}
+					{{$posts := where .Site.RegularPages "FirstSection.Params.content_kind" "post"}}
+					{{if $posts}}
+						{{$firstYear = (index $posts.ByDate 0).PublishDate.Year}}
+						{{$lastYear = (index $posts.ByDate.Reverse 0).PublishDate.Year}}
+					{{end}}
+					{{if ne $lastYear $firstYear}}
+						{{$firstYear}}-{{$lastYear}}
+					{{else}}
+						{{$firstYear}}
+					{{end}}
+					{{.Site.Params.author}}
+				</p>
+
+				<p class="footer__licence">
+					<a href="https://creativecommons.org/licenses/by/4.0" rel="license">
+						CC BY 4.0 <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt=""><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="">
+					</a>
+				</p>
+			</div>
+		</footer>
+	</body>
+</html>

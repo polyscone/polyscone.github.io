@@ -1,0 +1,26 @@
+baseURL = "https://polyscone.com/"
+publishDir = "docs"
+locale = "en-GB"
+title = "Polyscone"
+
+enableRobotsTXT = true
+capitalizeListTitles = false
+pluralizeListTitles = false
+
+[params]
+	author = "Jake Lucas (Polyscone)"
+	tagline = "Notes, projects, and other technical stuff"
+	description = "Posts and videos about my programming projects."
+	twitter_url = "https://x.com/polyscone"
+	youtube_url = "https://youtube.com/@polyscone"
+
+[markup.highlight]
+	codeFences = false
+
+[markup.tableOfContents]
+	startLevel = 2
+	endLevel = 3
+	ordered = true
+
+[markup.goldmark.extensions.typographer]
+	disable = true

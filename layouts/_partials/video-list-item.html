@@ -1,0 +1,12 @@
+{{$url := index . "url"}}
+
+<li>
+	<h2>{{index . "title"}}</h2>
+	<p>{{index . "description"}}</p>
+
+	{{with $url}}
+		<a href="{{.}}" target="_blank" rel="noreferrer">View playlist <span aria-hidden="true">↗</span></a>
+	{{else}}
+		<span>Playlist link not added</span>
+	{{end}}
+</li>

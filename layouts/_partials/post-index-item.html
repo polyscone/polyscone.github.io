@@ -1,0 +1,8 @@
+{{$page := .page}}
+<li>
+	<time datetime="{{$page.PublishDate.Format "2006-01-02"}}">{{$page.PublishDate.Format "2006-01-02"}}</time>
+	<span aria-hidden="true">/</span>
+	<a href="{{$page.RelPermalink}}">
+		{{if .showSeries}}{{$page.FirstSection.Title}}: {{end}}{{with .partNumber}}Part {{.}}: {{end}}{{$page.Title}}
+	</a>
+</li>
