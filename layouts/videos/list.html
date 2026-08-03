@@ -3,7 +3,42 @@
 
 	<ol class="video-list">
 		{{range .Params.series}}
-			{{partial "video-list-item.html" .}}
+			{{partial "video-list-item.html" (dict "page" $ "series" .)}}
 		{{end}}
 	</ol>
+
+	<script>
+		function openAccordion () {
+			const id = window.location.hash.slice(1)
+
+			if (!id) {
+				return
+			}
+
+			const accordion = document.getElementById(id)
+
+			if (accordion?.matches("details.video-table")) {
+				accordion.open = true
+			}
+		}
+
+		function updateHash (event) {
+			const accordion = event.currentTarget
+			const id = window.location.hash.slice(1)
+
+			if (accordion.open) {
+				window.history.replaceState(null, "", `#${accordion.id}`)
+			} else if (id === accordion.id) {
+				window.history.replaceState(null, "", window.location.pathname + window.location.search)
+			}
+		}
+
+		document.querySelectorAll("details.video-table[id]").forEach(accordion => {
+			accordion.addEventListener("toggle", updateHash)
+		})
+
+		openAccordion()
+
+		window.addEventListener("hashchange", openAccordion)
+	</script>
 {{end}}

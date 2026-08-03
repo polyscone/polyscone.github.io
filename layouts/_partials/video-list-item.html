@@ -1,12 +1,15 @@
-{{$url := index . "url"}}
+{{$page := .page}}
+{{$series := .series}}
 
 <li>
-	<h2>{{index . "title"}}</h2>
-	<p>{{index . "description"}}</p>
+	<h2>{{index $series "title"}}</h2>
+	<p>{{index $series "description"}}</p>
 
-	{{with $url}}
-		<a href="{{.}}" target="_blank" rel="noreferrer">View playlist <span aria-hidden="true">↗</span></a>
-	{{else}}
-		<span>Playlist link not added</span>
+	{{with index $series "video_groups"}}
+		<div class="video-groups">
+			{{range .}}
+				{{partial "video-table.html" (dict "data" (index $series "data") "group" . "page" $page)}}
+			{{end}}
+		</div>
 	{{end}}
 </li>

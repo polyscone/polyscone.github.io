@@ -1,0 +1,41 @@
+{{$group := .group}}
+{{$page := .page}}
+{{$videos := index $page.Params.video_data .data}}
+{{$playlistID := replaceRE `^.*[?&]list=([^&]+).*$` "$1" (index $group "url")}}
+
+{{with index $group "subseries"}}
+	{{$videos = where $videos "subseries" .}}
+{{end}}
+
+{{with $videos}}
+	<details class="video-table"{{with index $group "id"}} id="{{.}}"{{end}}>
+		<summary>
+			{{with index $group "title"}}<strong>{{.}}</strong> · {{end}}
+			{{len .}} videos
+
+			{{with index $group "url"}}
+				<a class="video-table__playlist" href="{{.}}" target="_blank" rel="noreferrer">{{index $group "link_text" | default "View sub-series playlist"}}</a>
+			{{end}}
+		</summary>
+
+		<table>
+			<tbody>
+				{{range .}}
+					{{$videoURL := printf "%s&list=%s" .url $playlistID}}
+					<tr{{with .tags}} class="{{range .}}video-table__row--{{strings.TrimSpace .}} {{end}}"{{end}}>
+						<td><a href="{{$videoURL}}" target="_blank" rel="noreferrer">{{.title}}</a></td>
+						<td>
+							{{range .tags}}
+								{{$tag := strings.TrimSpace .}}
+								{{with index $page.Params.video_tags $tag}}
+									{{$colours := index $page.Params.video_tag_colours .colour}}
+									<span class="video-tag video-tag--{{$tag}}" style="--video-tag-background: {{$colours.background}}; --video-tag-color: {{$colours.text}}">{{.label}}</span>
+								{{end}}
+							{{end}}
+						</td>
+					</tr>
+				{{end}}
+			</tbody>
+		</table>
+	</details>
+{{end}}
