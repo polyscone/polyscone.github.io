@@ -1,6 +1,6 @@
 +++
-title = "Initial Bootstrap Compiler"
-description = "With the PE32+ executable prepared I write the first version of the compiler that's able to compile itself. The initial bootstrap language converts ASCII hex representations of bytes into raw bytes and supports line comments. This allows me to leave the hex editor behind and use a normal text editor instead."
+title = "Building the First Bootstrap Compiler"
+description = "Writing a self-hosting compiler directly in x86-64 machine code that converts hexadecimal source text into executable bytes and supports comments."
 date = 2026-07-30
 draft = false
 tags = ["Compiler", "x86_64", "PE32+", "Windows"]
