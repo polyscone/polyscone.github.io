@@ -14,7 +14,7 @@
 			{{len .}} videos
 
 			{{with index $group "url"}}
-				<a class="video-table__playlist" href="{{.}}" target="_blank" rel="noreferrer">{{index $group "link_text" | default "View sub-series playlist"}}</a>
+				<a class="video-table__playlist" href="{{.}}" target="_blank" rel="noreferrer">{{index $group "link_text"}}</a>
 			{{end}}
 		</summary>
 

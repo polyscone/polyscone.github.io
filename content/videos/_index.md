@@ -9,15 +9,16 @@ data = "compiler_toolchain"
 
 [[series.video_groups]]
 id = "compiler-toolchain"
-title = "Main playlist"
+title = "All Videos"
 url = "https://www.youtube.com/playlist?list=PLfwYKZej86Po9QdiPknTLbtWyeUD7rKlP"
-link_text = "View playlist"
+link_text = "YouTube playlist"
 
 [[series.video_groups]]
 id = "x86-64-encoder"
 title = "x86-64 Encoder"
 url = "https://www.youtube.com/playlist?list=PLfwYKZej86PrERg1ho6r17PyXmFUD5CZ_"
 subseries = "x86_64_encoder"
+link_text = "YouTube playlist"
 
 [[series]]
 title = "Compiler From Scratch (2025 Archive)"
@@ -26,9 +27,9 @@ data = "compiler_from_scratch"
 
 [[series.video_groups]]
 id = "compiler-from-scratch"
-title = "Main playlist"
+title = "All Videos"
 url = "https://www.youtube.com/playlist?list=PLfwYKZej86PpEFsy6HQB9WQIlIGmfOy_s"
-link_text = "View playlist"
+link_text = "YouTube playlist"
 
 [[series]]
 title = "Tree-Walk Interpreter in JavaScript (2025 Archive)"
@@ -37,9 +38,9 @@ data = "js_treewalk_interpreter"
 
 [[series.video_groups]]
 id = "tree-walk-interpreter"
-title = "Main playlist"
+title = "All Videos"
 url = "https://www.youtube.com/playlist?list=PLTrjUW-dLpeY"
-link_text = "View playlist"
+link_text = "YouTube playlist"
 
 [[video_data.compiler_toolchain]]
 subseries = "x86_64_encoder"
