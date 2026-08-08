@@ -30,10 +30,17 @@
 				<li><a{{if or (eq .Section "posts") (eq .FirstSection.Params.content_kind "post")}} aria-current="page"{{end}} href="{{"/posts/" | relURL}}">Posts</a></li>
 				<li><a{{if eq .Section "tags"}} aria-current="page"{{end}} href="{{"/tags/" | relURL}}">Tags</a></li>
 				<li><a{{if eq .Section "videos"}} aria-current="page"{{end}} href="{{"/videos/" | relURL}}">Videos</a></li>
-				<li>
+				<li class="navigation__social-start">
 					<a href="{{.Site.Params.twitter_url}}" aria-label="Twitter" title="Twitter" target="_blank" rel="noreferrer">
 						<svg viewBox="0 0 24 24" aria-hidden="true">
 							<path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 15.6 6.4 22H3.3l7.2-8.2L2.8 2h6.4l4.4 5.8L18.9 2Zm-1.1 17.9h1.7L8.3 4H6.5l11.3 15.9Z"/>
+						</svg>
+					</a>
+				</li>
+				<li>
+					<a href="{{.Site.Params.bluesky_url}}" aria-label="Bluesky" title="Bluesky" target="_blank" rel="noreferrer">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M12 10.8c-1.1-2.1-4-6.1-6.8-8C2.6.9 1.6 1.3.9 1.6.1 1.9 0 3.1 0 3.8s.4 5.7.6 6.5c.8 2.7 3.7 3.7 6.4 3.4-4.7.7-8.8 2.4-3.4 8.4 6 6.2 8.2-1.3 8.4-2.8.2 1.5 2.4 9 8.4 2.8 5.4-6 1.3-7.7-3.4-8.4 2.7.3 5.6-.7 6.4-3.4.2-.8.6-5.8.6-6.5s-.1-1.9-.9-2.2c-.7-.3-1.7-.7-4.3 1.2-2.8 1.9-5.7 5.9-6.8 8Z"/>
 						</svg>
 					</a>
 				</li>

@@ -12,6 +12,7 @@ pluralizeListTitles = false
 	tagline = "Notes, projects, and other technical stuff"
 	description = "Posts and videos about my programming projects."
 	twitter_url = "https://x.com/polyscone"
+	bluesky_url = "https://bsky.app/profile/polyscone.bsky.social"
 	youtube_url = "https://youtube.com/@polyscone"
 
 [markup.highlight]

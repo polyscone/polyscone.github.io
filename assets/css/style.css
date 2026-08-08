@@ -171,7 +171,7 @@ blockquote > :last-child::after {
 	background: #f7f8fa;
 }
 
-.navigation li:nth-last-child(2) {
+.navigation__social-start {
 	margin-inline-start: auto;
 }
 
