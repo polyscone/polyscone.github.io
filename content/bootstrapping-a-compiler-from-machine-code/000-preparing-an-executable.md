@@ -1,6 +1,6 @@
 +++
 title = "Preparing an Executable"
-description = "I write an executable file by hand that imports a Win32 API function to call. This provides me with a simple template that I can use to start writing the initial bootstrap compiler."
+description = "In order to write any programs I first need an executable file to put the code in, so I write an executable file by hand that imports a Win32 API function to call. This provides me with a simple template that I can use to start writing the initial bootstrap compiler."
 date = 2026-07-29
 draft = false
 tags = ["Compiler", "x86_64", "PE32+", "Windows"]
