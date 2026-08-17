@@ -384,6 +384,12 @@ title = "Improving Performance"
 url = "https://www.youtube.com/watch?v=LhcW-OqLdQM"
 tags = ["performance"]
 
+[[video_data.compiler_toolchain]]
+subseries = "x86_64_encoder"
+title = "Recording Labels and Fixups"
+url = "https://www.youtube.com/watch?v=3X7D28FxUts"
+tags = ["labels", "fixups"]
+
 [[video_data.compiler_from_scratch]]
 title = "Building a Scanner"
 url = "https://www.youtube.com/watch?v=yFV8zv6bluU"
@@ -602,6 +608,8 @@ test_generation = { label = "Test generation", colour = "blue" }
 test_harness = { label = "Test harness", colour = "blue" }
 type_checker = { label = "Type checker", colour = "green" }
 validation = { label = "Validation", colour = "blue" }
+labels = { label = "Labels", colour = "blue" }
+fixups = { label = "Fixups", colour = "blue" }
 variables = { label = "Variables", colour = "green" }
 vex_evex_prefixes = { label = "VEX/EVEX prefixes", colour = "blue" }
 vex_w = { label = "VEX.W", colour = "blue" }
