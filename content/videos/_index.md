@@ -409,6 +409,12 @@ title = "ELF Relocatable Object File Types and Data Structures"
 url = "https://www.youtube.com/watch?v=CKcGC0fjiBI"
 tags = []
 
+[[video_data.compiler_toolchain]]
+subseries = "elf_object_file_writer"
+title = "Writing a Basic ELF Relocatable Object File"
+url = "https://www.youtube.com/watch?v=cdRI8N9p71Y"
+tags = []
+
 [[video_data.compiler_from_scratch]]
 title = "Building a Scanner"
 url = "https://www.youtube.com/watch?v=yFV8zv6bluU"
