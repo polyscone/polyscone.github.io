@@ -415,6 +415,18 @@ title = "Writing a Basic ELF Relocatable Object File"
 url = "https://www.youtube.com/watch?v=cdRI8N9p71Y"
 tags = []
 
+[[video_data.compiler_toolchain]]
+subseries = "x86_64_encoder"
+title = "Fixing Destructive Fixups"
+url = "https://www.youtube.com/watch?v=qoKpP0xA1O0"
+tags = []
+
+[[video_data.compiler_toolchain]]
+subseries = "elf_object_file_writer"
+title = "Adding Symbols to ELF Objects"
+url = "https://www.youtube.com/watch?v=fbB1dqfRLiU"
+tags = []
+
 [[video_data.compiler_from_scratch]]
 title = "Building a Scanner"
 url = "https://www.youtube.com/watch?v=yFV8zv6bluU"
