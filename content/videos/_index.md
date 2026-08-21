@@ -427,6 +427,18 @@ title = "Adding Symbols to ELF Objects"
 url = "https://www.youtube.com/watch?v=fbB1dqfRLiU"
 tags = []
 
+[[video_data.compiler_toolchain]]
+subseries = "elf_object_file_writer"
+title = "Adding Relocations to ELF Objects"
+url = "https://www.youtube.com/watch?v=KHrE5hac8rs"
+tags = []
+
+[[video_data.compiler_toolchain]]
+subseries = "elf_object_file_writer"
+title = "Changes to Support .bss and Cleanup"
+url = "https://www.youtube.com/watch?v=OtPsXQAX2Xg"
+tags = []
+
 [[video_data.compiler_from_scratch]]
 title = "Building a Scanner"
 url = "https://www.youtube.com/watch?v=yFV8zv6bluU"
