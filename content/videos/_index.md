@@ -439,6 +439,12 @@ title = "Changes to Support .bss and Cleanup"
 url = "https://www.youtube.com/watch?v=OtPsXQAX2Xg"
 tags = []
 
+[[video_data.compiler_toolchain]]
+subseries = "x86_64_encoder"
+title = "Fixing EVEX and Memory Encoding Edge Cases"
+url = "https://www.youtube.com/watch?v=4-uF-K_r778"
+tags = []
+
 [[video_data.compiler_from_scratch]]
 title = "Building a Scanner"
 url = "https://www.youtube.com/watch?v=yFV8zv6bluU"
