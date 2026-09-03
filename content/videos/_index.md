@@ -4,7 +4,7 @@ description = "Recordings of my programming projects."
 
 [[series]]
 title = "Compiler Toolchain Development"
-description = "A detailed build of a compiler toolchain in Go working up through each layer from the bottom, starting with an x86-64 encoder and continuing through object files, an assembler, MIR, IR, scanner, parser, and type checker."
+description = "A detailed series of pre-recorded, unedited coding sessions building a compiler backend and toolchain from scratch in Go, without relying on tools like LLVM. It starts with direct x86-64 machine-code instruction encoding and progresses through ELF/COFF object files, an assembler, MIR, IR, register allocation, code generation, a scanner, Pratt parser, type checker, and frontend."
 data = "compiler_toolchain"
 
 [[series.video_groups]]
@@ -29,7 +29,7 @@ link_text = "YouTube playlist"
 
 [[series]]
 title = "Compiler From Scratch (2025 Archive)"
-description = "An earlier compiler implementation that spans 19 hours implementing a scanner, parser, type checker, simple IR, and finally generates x64 machine code and a PE32+ executable on Windows."
+description = "A 19-hour series of pre-recorded, unedited coding sessions implementing a compiler from scratch. It covers scanning, Pratt parsing, type checking, simple IR, and a native x86-64 backend that emits machine code and constructs a PE32+ Windows executable directly, without relying on tools like LLVM."
 data = "compiler_from_scratch"
 
 [[series.video_groups]]
