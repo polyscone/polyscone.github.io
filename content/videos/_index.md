@@ -27,6 +27,13 @@ url = "https://www.youtube.com/playlist?list=PLQhDnqkMbbjw"
 subseries = "elf_object_file_writer"
 link_text = "YouTube playlist"
 
+[[series.video_groups]]
+id = "coff-object-file-writer"
+title = "COFF Object File Writer"
+url = "https://www.youtube.com/playlist?list=PLSCWttVpvRvQ"
+subseries = "coff_object_file_writer"
+link_text = "YouTube playlist"
+
 [[series]]
 title = "Compiler From Scratch (2025 Archive)"
 description = "A 19-hour series of pre-recorded, unedited coding sessions implementing a compiler from scratch. It covers scanning, Pratt parsing, type checking, simple IR, and a native x86-64 backend that emits machine code and constructs a PE32+ Windows executable directly, without relying on tools like LLVM."
@@ -443,6 +450,12 @@ tags = []
 subseries = "x86_64_encoder"
 title = "Fixing EVEX and Memory Encoding Edge Cases"
 url = "https://www.youtube.com/watch?v=4-uF-K_r778"
+tags = []
+
+[[video_data.compiler_toolchain]]
+subseries = "coff_object_file_writer"
+title = "COFF Object File Types and Data Structures"
+url = "https://www.youtube.com/watch?v=fEyJLfbJNX4"
 tags = []
 
 [[video_data.compiler_from_scratch]]
