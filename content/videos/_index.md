@@ -458,6 +458,12 @@ title = "COFF Object File Types and Data Structures"
 url = "https://www.youtube.com/watch?v=fEyJLfbJNX4"
 tags = []
 
+[[video_data.compiler_toolchain]]
+subseries = "coff_object_file_writer"
+title = "Writing a Minimal COFF Object File"
+url = "https://www.youtube.com/watch?v=9k3SoSFmH1A"
+tags = []
+
 [[video_data.compiler_from_scratch]]
 title = "Building a Scanner"
 url = "https://www.youtube.com/watch?v=yFV8zv6bluU"
