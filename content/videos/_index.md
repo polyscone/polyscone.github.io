@@ -470,6 +470,12 @@ title = "Adding Relocations to COFF Objects"
 url = "https://www.youtube.com/watch?v=3yt5g3AptXE"
 tags = []
 
+[[video_data.compiler_toolchain]]
+subseries = "coff_object_file_writer"
+title = "Long COFF Symbol and Section Names and Relocation Overflow"
+url = "https://www.youtube.com/watch?v=4wkJam7o7xw"
+tags = []
+
 [[video_data.compiler_from_scratch]]
 title = "Building a Scanner"
 url = "https://www.youtube.com/watch?v=yFV8zv6bluU"
