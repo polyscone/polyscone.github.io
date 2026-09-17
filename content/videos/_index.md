@@ -34,6 +34,13 @@ url = "https://www.youtube.com/playlist?list=PLSCWttVpvRvQ"
 subseries = "coff_object_file_writer"
 link_text = "YouTube playlist"
 
+[[series.video_groups]]
+id = "assembler"
+title = "Assembler"
+url = "https://www.youtube.com/playlist?list=PLQE7BMSLFGHE"
+subseries = "assembler"
+link_text = "YouTube playlist"
+
 [[series]]
 title = "Compiler From Scratch (2025 Archive)"
 description = "A 19-hour series of pre-recorded, unedited coding sessions implementing a compiler from scratch. It covers scanning, Pratt parsing, type checking, simple IR, and a native x86-64 backend that emits machine code and constructs a PE32+ Windows executable directly, without relying on tools like LLVM."
@@ -474,6 +481,12 @@ tags = []
 subseries = "coff_object_file_writer"
 title = "Long COFF Symbol and Section Names and Relocation Overflow"
 url = "https://www.youtube.com/watch?v=4wkJam7o7xw"
+tags = []
+
+[[video_data.compiler_toolchain]]
+subseries = "assembler"
+title = "Writing a Scanner for an Assembler"
+url = "https://www.youtube.com/watch?v=WZU5rR0aT1g"
 tags = []
 
 [[video_data.compiler_from_scratch]]
