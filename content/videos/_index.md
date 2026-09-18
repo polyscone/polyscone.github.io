@@ -489,6 +489,12 @@ title = "Writing a Scanner for an Assembler"
 url = "https://www.youtube.com/watch?v=WZU5rR0aT1g"
 tags = []
 
+[[video_data.compiler_toolchain]]
+subseries = "assembler"
+title = "Tracking Trivia Tokens in the Scanner"
+url = "https://www.youtube.com/watch?v=FoYM5BRizMc"
+tags = []
+
 [[video_data.compiler_from_scratch]]
 title = "Building a Scanner"
 url = "https://www.youtube.com/watch?v=yFV8zv6bluU"
