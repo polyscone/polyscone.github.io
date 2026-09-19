@@ -495,6 +495,12 @@ title = "Tracking Trivia Tokens in the Scanner"
 url = "https://www.youtube.com/watch?v=FoYM5BRizMc"
 tags = []
 
+[[video_data.compiler_toolchain]]
+subseries = "assembler"
+title = "Fixing Scanner Bugs"
+url = "https://www.youtube.com/watch?v=9ptPtAgB1FQ"
+tags = []
+
 [[video_data.compiler_from_scratch]]
 title = "Building a Scanner"
 url = "https://www.youtube.com/watch?v=yFV8zv6bluU"
