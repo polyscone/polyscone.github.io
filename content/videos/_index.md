@@ -501,6 +501,12 @@ title = "Fixing Scanner Bugs"
 url = "https://www.youtube.com/watch?v=9ptPtAgB1FQ"
 tags = []
 
+[[video_data.compiler_toolchain]]
+subseries = "assembler"
+title = "Comment-Driven Parser Test Setup"
+url = "https://www.youtube.com/watch?v=Ek7DFi6tnqo"
+tags = []
+
 [[video_data.compiler_from_scratch]]
 title = "Building a Scanner"
 url = "https://www.youtube.com/watch?v=yFV8zv6bluU"
