@@ -507,6 +507,12 @@ title = "Comment-Driven Parser Test Setup"
 url = "https://www.youtube.com/watch?v=Ek7DFi6tnqo"
 tags = []
 
+[[video_data.compiler_toolchain]]
+subseries = "assembler"
+title = "Recursive Descent Expression Parsing"
+url = "https://www.youtube.com/watch?v=fOSfFC3Vvsg"
+tags = []
+
 [[video_data.compiler_from_scratch]]
 title = "Building a Scanner"
 url = "https://www.youtube.com/watch?v=yFV8zv6bluU"
