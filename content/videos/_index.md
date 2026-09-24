@@ -513,6 +513,12 @@ title = "Recursive Descent Expression Parsing"
 url = "https://www.youtube.com/watch?v=fOSfFC3Vvsg"
 tags = []
 
+[[video_data.compiler_toolchain]]
+subseries = "assembler"
+title = "Parsing Section and Object Declarations"
+url = "https://www.youtube.com/watch?v=mxFTuzCJ15s"
+tags = []
+
 [[video_data.compiler_from_scratch]]
 title = "Building a Scanner"
 url = "https://www.youtube.com/watch?v=yFV8zv6bluU"
