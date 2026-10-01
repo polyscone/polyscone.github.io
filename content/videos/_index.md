@@ -525,6 +525,12 @@ title = "Parsing Import and Function Declarations"
 url = "https://www.youtube.com/watch?v=BIlow-HSUqY"
 tags = []
 
+[[video_data.compiler_toolchain]]
+subseries = "assembler"
+title = "Fixing Scanner and Parser Bugs"
+url = "https://www.youtube.com/watch?v=MjJDSqJay18"
+tags = []
+
 [[video_data.compiler_from_scratch]]
 title = "Building a Scanner"
 url = "https://www.youtube.com/watch?v=yFV8zv6bluU"
