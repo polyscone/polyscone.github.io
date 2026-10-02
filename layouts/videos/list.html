@@ -1,44 +1,44 @@
 {{define "main"}}
-	<h1>{{.Title}}</h1>
+	{{if eq .RelPermalink ("/videos/" | relURL)}}
+		<h1>{{.Title}}</h1>
+		{{.Content}}
 
-	<ol class="video-list">
-		{{range .Params.series}}
-			{{partial "video-list-item.html" (dict "page" $ "series" .)}}
-		{{end}}
-	</ol>
+		<ol class="video-list">
+			{{range .Sections.ByWeight}}
+				{{if not .Params.parent_series}}
+					{{partial "video-list-item.html" .}}
+				{{end}}
+			{{end}}
+		</ol>
+	{{else}}
+		<article class="post">
+			<p><a href="{{"/videos/" | relURL}}">Videos</a>{{with .Params.parent_series}} / <a href="{{(site.GetPage .).RelPermalink}}">Compiler Toolchain Development</a>{{end}}</p>
+			<h1>{{.Title}}</h1>
 
-	<script>
-		function openAccordion () {
-			const id = window.location.hash.slice(1)
+			{{.Content}}
 
-			if (!id) {
-				return
-			}
+			{{with .Params.playlist}}
+				<p><a href="{{.}}" target="_blank" rel="noreferrer">Watch the {{$.Title}} playlist on YouTube</a></p>
+			{{end}}
 
-			const accordion = document.getElementById(id)
+			{{with .Params.subseries}}
+				<h2>Toolchain subseries</h2>
+				<ol class="video-list">
+					{{range .}}
+						{{partial "video-list-item.html" (site.GetPage .)}}
+					{{end}}
+				</ol>
+			{{end}}
 
-			if (accordion?.matches("details.video-table")) {
-				accordion.open = true
-			}
-		}
+			{{$videos := .RegularPages}}
+			{{with .Params.collection}}
+				{{$videos = where $.FirstSection.RegularPagesRecursive "Params.collection" .}}
+			{{end}}
 
-		function updateHash (event) {
-			const accordion = event.currentTarget
-			const id = window.location.hash.slice(1)
-
-			if (accordion.open) {
-				window.history.replaceState(null, "", `#${accordion.id}`)
-			} else if (id === accordion.id) {
-				window.history.replaceState(null, "", window.location.pathname + window.location.search)
-			}
-		}
-
-		document.querySelectorAll("details.video-table[id]").forEach(accordion => {
-			accordion.addEventListener("toggle", updateHash)
-		})
-
-		openAccordion()
-
-		window.addEventListener("hashchange", openAccordion)
-	</script>
+			{{with $videos}}
+				<h2 id="videos">Videos</h2>
+				{{partial "video-table.html" (dict "videos" .ByWeight)}}
+			{{end}}
+		</article>
+	{{end}}
 {{end}}

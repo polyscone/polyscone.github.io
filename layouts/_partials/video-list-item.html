@@ -1,15 +1,8 @@
-{{$page := .page}}
-{{$series := .series}}
-
-<li>
-	<h2>{{index $series "title"}}</h2>
-	<p>{{index $series "description"}}</p>
-
-	{{with index $series "video_groups"}}
-		<div class="video-groups">
-			{{range .}}
-				{{partial "video-table.html" (dict "data" (index $series "data") "group" . "page" $page)}}
-			{{end}}
-		</div>
+<li{{with .Params.index_id}} id="{{.}}"{{end}}>
+	{{if .Params.parent_series}}
+		<h3><a href="{{.RelPermalink}}">{{.Title}}</a></h3>
+	{{else}}
+		<h2><a href="{{.RelPermalink}}">{{.Title}}</a></h2>
 	{{end}}
+	<p>{{.Description}}</p>
 </li>
