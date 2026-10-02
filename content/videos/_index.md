@@ -531,6 +531,12 @@ title = "Fixing Scanner and Parser Bugs"
 url = "https://www.youtube.com/watch?v=MjJDSqJay18"
 tags = []
 
+[[video_data.compiler_toolchain]]
+subseries = "assembler"
+title = "Unary Prefix Operators and Object Align and Attributes"
+url = "https://www.youtube.com/watch?v=ACDJ0PBvnF0"
+tags = []
+
 [[video_data.compiler_from_scratch]]
 title = "Building a Scanner"
 url = "https://www.youtube.com/watch?v=yFV8zv6bluU"
